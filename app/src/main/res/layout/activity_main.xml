@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/background_splash"
+        android:src="@drawable/splash_bg"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_36sdp"
+        android:id="@+id/heading"
+        android:text="@string/what_is_your_height"
+        android:textColor="@color/common_color"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="@dimen/_24ssp"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/subHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="@string/height_helps_personalize_workouts_and_trackfitness_progress_accurately"
+        android:textColor="@color/common_color_light"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintStart_toStartOf="@id/heading"
+        app:layout_constraintTop_toBottomOf="@id/heading"
+        app:layout_constraintEnd_toEndOf="@id/heading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.01"
+        android:gravity="center"
+
+       />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_190sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:id="@+id/unitLayout"
+        app:layout_constraintTop_toBottomOf="@id/subHeading"
+        app:layout_constraintStart_toStartOf="@id/subHeading"
+        app:layout_constraintEnd_toEndOf="@id/subHeading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        android:background="@drawable/bg_white"
+        >
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+
+            >
+            <TextView
+                android:id="@+id/cmTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:text="@string/cm"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="@dimen/_24ssp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
+
+                />
+
+            <TextView
+                android:id="@+id/ftTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_common"
+                android:fontFamily="@font/poppins_bold_italic"
+                android:gravity="center"
+                android:text="@string/ft"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_24ssp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/unitValue"
+        android:layout_width="@dimen/_210sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/unitLayout"
+        app:layout_constraintStart_toStartOf="@id/unitLayout"
+        app:layout_constraintEnd_toEndOf="@id/unitLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        >
+        <TextView
+            android:id="@+id/heightValue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/outfit_extrabold"
+            android:textSize="@dimen/_50ssp"
+            android:textColor="@color/common_color"
+            android:text="@string/_5_7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <TextView
+            android:id="@+id/heightUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/ft"
+
+            android:textColor="@color/common_color_light"
+            android:textSize="@dimen/_32ssp"
+            app:layout_constraintStart_toEndOf="@id/heightValue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintHorizontal_bias="0.1"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/nextBtn"
+        android:layout_width="@dimen/_190sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:text="@string/next"
+        style="@style/CommonButtonStyle"
+        app:layout_constraintStart_toStartOf="@id/unitLayout"
+        app:layout_constraintEnd_toEndOf="@id/unitLayout"
+        app:layout_constraintTop_toBottomOf="@id/unitValue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

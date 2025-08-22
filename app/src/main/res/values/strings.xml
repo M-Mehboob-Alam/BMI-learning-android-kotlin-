@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BMILearningProject</string>
+    <string name="background_splash">Background Splash</string>
+    <string name="logo">logo</string>
+    <string name="health_is_the_real_wealth">Health is the real wealth.</string>
+    <string name="what_is_your_height">What is Your Height ?</string>
+    <string name="height_helps_personalize_workouts_and_trackfitness_progress_accurately">Height helps personalize workouts and \ntrackfitness progress accurately</string>
+    <string name="cm">cm</string>
+    <string name="ft">ft</string>
+    <string name="_5_7">5.7</string>
+    <string name="next">Next</string>
+</resources>
