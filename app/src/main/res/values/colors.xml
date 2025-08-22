@@ -4,4 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="common_color">#267DFF</color>
     <color name="common_color_light">#4C4C4C</color>
+
+    <color name="green">#9CB135</color>
+    <color name="transparent">#00000000</color>
+
 </resources>
