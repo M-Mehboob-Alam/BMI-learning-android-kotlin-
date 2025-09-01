@@ -1,20 +1,22 @@
 package com.example.bmilearningproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bmilearningproject.databinding.ActivityMainBinding
-import com.example.bmilearningproject.databinding.ActivitySplashBinding
+import java.util.Locale
 
-class MainActivity : AppCompatActivity() {
+class HeightAct : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
     private val TAG = "MainActivity"
+    //      initialize shared preference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,25 +30,53 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val pref = getSharedPreferences("BmiCalculator", MODE_PRIVATE)
+        //        create editor
+        val editor = pref.edit()
+
         binding.apply {
             cmTxtView.setOnClickListener {
                 changeHeightUnit("cm")
                 changeSelectedBg("cm")
-//                Toast.makeText(this@MainActivity, "cm clicked", Toast.LENGTH_SHORT).show()
+                editor.putString("heightUnit", "cm")
+                Toast.makeText(this@HeightAct, "cm clicked", Toast.LENGTH_SHORT).show()
             }
             ftTxtView.setOnClickListener {
                 changeSelectedBg("ft")
                 changeHeightUnit("ft")
+                editor.putString("heightUnit", "ft")
 //                Toast.makeText(this@MainActivity, "ft clicked", Toast.LENGTH_SHORT).show()
 
             }
+            scaleView.setStartingPoint(165f)
+            scaleView.setUpdateListener { result ->
+                changeHeightValue(result.toFloat())
+                Log.i(TAG, "onCreate: $result")
+                editor.putFloat("heightValue", result)
+            }
+
+            editor.apply()
+            nextBtn.setOnClickListener {
+                startActivity(Intent(this@HeightAct, WeightActivity::class.java))
+                finish()
+            }
+//
         }
+
     }
 
     private fun changeHeightUnit(unit: String){
         binding.heightUnit.text = unit
+
+    }
+
+    private fun changeHeightValue(value : Float){
+//        float value 2 decimal places
+        binding.heightValue.text =String.format(Locale.getDefault(), "%.2f", value)
+
     }
     private fun changeSelectedBg(getUnit: String){
+
         if (getUnit === "cm"){
             binding.cmTxtView.setBackgroundResource(R.drawable.bg_common)
             binding.cmTxtView.setTextColor(resources.getColor(R.color.white))

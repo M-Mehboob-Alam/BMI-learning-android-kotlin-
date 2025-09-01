@@ -12,23 +12,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BMILearningProject">
         <activity
-            android:name=".SplashAct"
-            android:exported="true"
-            >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+            android:name=".AgeAct"
+            android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".WeightActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashAct"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".HeightAct"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
 

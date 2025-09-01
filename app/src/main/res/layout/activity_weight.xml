@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HeightAct">
+    tools:context=".WeightActivity">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
         android:id="@+id/heading"
-        android:text="@string/what_is_your_height"
+        android:text="@string/what_is_your_weight"
         android:textColor="@color/common_color"
         android:fontFamily="@font/poppins_bold"
         android:textSize="24sp"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
-        android:text="@string/height_helps_personalize_workouts_and_trackfitness_progress_accurately"
+        android:text="@string/knowing_your_weight_helps_us_tailor_workouts_track_progress_better"
         android:textColor="@color/common_color_light"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/heading"
@@ -61,7 +61,7 @@
         app:layout_constraintVertical_bias="0.01"
         android:gravity="center"
 
-       />
+        />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_190sdp"
         android:layout_height="@dimen/_50sdp"
@@ -83,10 +83,10 @@
 
             >
             <TextView
-                android:id="@+id/cmTxtView"
+                android:id="@+id/kgTextView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:text="@string/cm"
+                android:text="@string/kg"
                 android:fontFamily="@font/poppins_bold"
                 android:textSize="24sp"
                 android:layout_weight="1"
@@ -97,7 +97,7 @@
                 />
 
             <TextView
-                android:id="@+id/ftTxtView"
+                android:id="@+id/libsTxtView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_gravity="center"
@@ -106,7 +106,7 @@
                 android:background="@drawable/bg_common"
                 android:fontFamily="@font/poppins_bold_italic"
                 android:gravity="center"
-                android:text="@string/ft"
+                android:text="@string/libs"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -137,11 +137,11 @@
             />
 
         <TextView
-            android:id="@+id/heightUnit"
+            android:id="@+id/weightUnit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins_medium"
-            android:text="@string/ft"
+            android:text="@string/libs"
 
             android:textColor="@color/common_color_light"
             android:textSize="32sp"

@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="@string/health_is_the_real_wealth"
         android:textColor="@color/common_color"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
