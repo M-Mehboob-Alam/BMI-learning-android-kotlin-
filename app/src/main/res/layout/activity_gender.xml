@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GenderAct">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/background_splash"
+        android:src="@drawable/splash_bg"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_36sdp"
+        android:id="@+id/heading"
+        android:text="@string/select_your_gender"
+        android:textColor="@color/common_color"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="24sp"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/subHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="@string/knowing_your_gender_helps_us_tailor_n_workouts_track_progress_better"
+        android:textColor="@color/common_color_light"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/heading"
+        app:layout_constraintTop_toBottomOf="@id/heading"
+        app:layout_constraintEnd_toEndOf="@id/heading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.01"
+        android:gravity="center"
+
+        />
+    <LinearLayout
+        android:id="@+id/genderLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/subHeading"
+        app:layout_constraintStart_toStartOf="@id/subHeading"
+        app:layout_constraintEnd_toEndOf="@id/subHeading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+        
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/genderMale"
+        android:layout_width="154dp"
+        android:layout_height="164dp"
+        app:cardCornerRadius="30dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/card_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subHeading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:cardBackgroundColor="@color/common_color"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/male_card"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:src="@drawable/male_image"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.3"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="1dp"
+            />
+
+            <TextView
+                android:id="@+id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/male"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/male_card"
+                app:layout_constraintStart_toStartOf="@id/male_card"
+                app:layout_constraintTop_toBottomOf="@id/male_card" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/genderFemale"
+        android:layout_width="154dp"
+        android:layout_height="164dp"
+        app:layout_constraintStart_toEndOf="@id/genderMale"
+        app:layout_constraintTop_toBottomOf="@id/subHeading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:cardCornerRadius="30dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/card_color"
+        app:cardBackgroundColor="@color/card_color"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/female_card"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:src="@drawable/female_image"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.3"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp"
+                />
+
+            <TextView
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/female"
+                android:textColor="@color/common_color_light"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/female_card"
+                app:layout_constraintStart_toStartOf="@id/female_card"
+                app:layout_constraintTop_toBottomOf="@id/female_card" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:id="@+id/nextBtn"
+        style="@style/CommonButtonStyle"
+        android:layout_width="@dimen/_190sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/genderMale"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintStart_toStartOf="@id/heading"
+        app:layout_constraintEnd_toEndOf="@id/heading"
+        app:layout_constraintHorizontal_bias="0.5"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

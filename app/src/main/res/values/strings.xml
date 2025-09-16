@@ -13,4 +13,13 @@
     <string name="what_is_your_weight">What is Your Weight ?</string>
     <string name="kg">kg</string>
     <string name="libs">libs</string>
+    <string name="back_icon">Back Icon</string>
+    <string name="what_is_your_age">What is your age?</string>
+    <string name="knowing_your_age_helps_us_tailor_n_workouts_track_progress_better"><![CDATA[Knowing your age helps us tailor \n workouts & track progress better]]></string>
+    <string name="_25">25</string>
+    <string name="y">y</string>
+    <string name="select_your_gender">Select your gender?</string>
+    <string name="knowing_your_gender_helps_us_tailor_n_workouts_track_progress_better"><![CDATA[Knowing your gender helps us tailor \n workouts & track progress better]]></string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 </resources>

@@ -17,6 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
+
     <com.example.bmilearningproject.util.MyScaleView
         android:id="@+id/scaleView"
         android:layout_width="@dimen/_25sdp"
@@ -28,6 +29,22 @@
         android:background="@color/white"
         app:layout_constraintHorizontal_bias="0.7"
 
+        />
+    <ImageView
+        android:id="@+id/backIc"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:contentDescription="@string/back_icon"
+        android:src="@drawable/back_icon"
+        android:scaleType="fitXY"
+        android:elevation="2dp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintVertical_bias="0.05"
         />
     <TextView
         android:layout_width="match_parent"

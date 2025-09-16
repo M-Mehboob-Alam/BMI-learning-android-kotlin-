@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BMILearningProject">
         <activity
-            android:name=".AgeAct"
+            android:name=".DashboardAct"
             android:exported="false" />
         <activity
-            android:name=".WeightActivity"
+            android:name=".Dashboard"
+            android:exported="false" />
+        <activity
+            android:name=".GenderAct"
             android:exported="false" />
         <activity
             android:name=".SplashAct"
@@ -27,8 +30,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".AgeAct"
+            android:exported="false" />
+        <activity
+            android:name=".WeightActivity"
+            android:exported="false" />
+        <activity
             android:name=".HeightAct"
-            android:exported="true">
+            android:exported="false">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->

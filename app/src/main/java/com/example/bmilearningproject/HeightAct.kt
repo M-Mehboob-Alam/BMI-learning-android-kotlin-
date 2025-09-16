@@ -57,7 +57,7 @@ class HeightAct : AppCompatActivity() {
 
             editor.apply()
             nextBtn.setOnClickListener {
-                startActivity(Intent(this@HeightAct, WeightActivity::class.java))
+                startActivity(Intent(this@HeightAct, DashboardAct::class.java))
                 finish()
             }
 //

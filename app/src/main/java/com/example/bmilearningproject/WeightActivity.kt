@@ -28,6 +28,9 @@ class WeightActivity : AppCompatActivity() {
         val editor = pref.edit()
 
         binding.apply {
+            backIc.setOnClickListener {
+                finish()
+            }
             kgTextView.setOnClickListener {
                 changeHeightUnit("kg")
                 changeSelectedBg("kg")
@@ -51,7 +54,7 @@ class WeightActivity : AppCompatActivity() {
 
             editor.apply()
             nextBtn.setOnClickListener {
-                startActivity(Intent(this@WeightActivity, WeightActivity::class.java))
+                startActivity(Intent(this@WeightActivity, HeightAct::class.java))
                 finish()
             }
         }

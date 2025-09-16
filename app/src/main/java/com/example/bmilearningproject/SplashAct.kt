@@ -37,7 +37,7 @@ class SplashAct : AppCompatActivity() {
         )
         Handler(Looper.getMainLooper()).postDelayed(
             {
-                val intent = Intent(this@SplashAct, HeightAct::class.java)
+                val intent = Intent(this@SplashAct, GenderAct::class.java)
                 startActivity(intent)
                 finish()
             }, 7000
