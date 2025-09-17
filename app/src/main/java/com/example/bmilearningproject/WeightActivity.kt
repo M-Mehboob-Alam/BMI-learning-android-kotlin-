@@ -36,7 +36,7 @@ class WeightActivity : AppCompatActivity() {
                 changeSelectedBg("kg")
                 editor.putString("weightUnit", "kg")
 
-                Toast.makeText(this@WeightActivity, "kg clicked", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@WeightActivity, "kg clicked", Toast.LENGTH_SHORT).show()
             }
             libsTxtView.setOnClickListener {
                 changeSelectedBg("libs")

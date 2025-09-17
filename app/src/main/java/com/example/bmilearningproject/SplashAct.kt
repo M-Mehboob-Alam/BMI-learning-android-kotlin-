@@ -33,14 +33,14 @@ class SplashAct : AppCompatActivity() {
             {
                 binding.title.text = "WELCOME TO BMI"
 
-            }, 3000
+            }, 1000
         )
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 val intent = Intent(this@SplashAct, GenderAct::class.java)
                 startActivity(intent)
                 finish()
-            }, 7000
+            }, 3000
         )
 //        binding.apply {
 //            val intent = Intent(this@SplashAct, MainActivity::class.java)

@@ -13,21 +13,21 @@
         android:theme="@style/Theme.BMILearningProject">
         <activity
             android:name=".DashboardAct"
-            android:exported="false" />
-        <activity
-            android:name=".Dashboard"
-            android:exported="false" />
-        <activity
-            android:name=".GenderAct"
-            android:exported="false" />
-        <activity
-            android:name=".SplashAct"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".GenderAct"
+            android:exported="false" />
+        <activity
+            android:name=".SplashAct"
+            android:exported="false">
+
         </activity>
         <activity
             android:name=".AgeAct"

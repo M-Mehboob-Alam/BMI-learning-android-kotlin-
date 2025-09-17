@@ -20,7 +20,7 @@
 
 
     <ImageView
-        android:id="@+id/backIc"
+        android:id="@+id/settingIc"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:contentDescription="@string/back_icon"
@@ -35,6 +35,137 @@
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintVertical_bias="0.05"
         />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/genderMale"
+        android:layout_width="154dp"
+        android:layout_height="164dp"
+        app:cardCornerRadius="30dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/card_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settingIc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:cardBackgroundColor="@color/common_color"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/male_card"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:src="@drawable/male_image"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.3"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp"
+                />
+
+            <TextView
+                android:id="@+id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/male"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/male_card"
+                app:layout_constraintStart_toStartOf="@id/male_card"
+                app:layout_constraintTop_toBottomOf="@id/male_card" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/genderFemale"
+        android:layout_width="154dp"
+        android:layout_height="164dp"
+        app:layout_constraintStart_toEndOf="@id/genderMale"
+        app:layout_constraintTop_toBottomOf="@id/settingIc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:cardCornerRadius="30dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/card_color"
+        app:cardBackgroundColor="@color/card_color"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/female_card"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:src="@drawable/female_image"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.3"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp"
+                />
+
+            <TextView
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/female"
+                android:textColor="@color/common_color_light"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/female_card"
+                app:layout_constraintStart_toStartOf="@id/female_card"
+                app:layout_constraintTop_toBottomOf="@id/female_card" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+    <LinearLayout
+        android:layout_width="345dp"
+        android:layout_height="58dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintTop_toBottomOf="@id/genderMale"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/genderMale"
+        app:layout_constraintEnd_toEndOf="@id/genderFemale"
+
+        >
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/common_color"
+            app:boxStrokeWidth="2dp"
+            android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="50dp"
+            app:boxCornerRadiusBottomStart="50dp"
+            app:boxCornerRadiusTopEnd="50dp"
+            app:boxCornerRadiusTopStart="50dp"
+            app:boxStrokeColorFocused="@color/common_color">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/weight"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

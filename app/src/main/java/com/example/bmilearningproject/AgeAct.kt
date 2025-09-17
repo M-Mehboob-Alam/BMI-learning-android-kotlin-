@@ -56,7 +56,7 @@ class AgeAct : AppCompatActivity() {
 
     private fun changeHeightValue(value : Int){
 //        float value 2 decimal places
-        Toast.makeText(this@AgeAct, "get age value from scale " + value, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this@AgeAct, "get age value from scale " + value, Toast.LENGTH_SHORT).show()
         binding.ageValue.text =value.toString()
 
     }

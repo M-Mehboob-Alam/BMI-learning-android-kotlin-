@@ -22,4 +22,5 @@
     <string name="knowing_your_gender_helps_us_tailor_n_workouts_track_progress_better"><![CDATA[Knowing your gender helps us tailor \n workouts & track progress better]]></string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="weight">Weight</string>
 </resources>

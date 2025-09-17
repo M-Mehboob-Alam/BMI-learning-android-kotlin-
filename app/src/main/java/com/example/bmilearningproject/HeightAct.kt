@@ -39,7 +39,7 @@ class HeightAct : AppCompatActivity() {
                 changeHeightUnit("cm")
                 changeSelectedBg("cm")
                 editor.putString("heightUnit", "cm")
-                Toast.makeText(this@HeightAct, "cm clicked", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@HeightAct, "cm clicked", Toast.LENGTH_SHORT).show()
             }
             ftTxtView.setOnClickListener {
                 changeSelectedBg("ft")
@@ -58,7 +58,7 @@ class HeightAct : AppCompatActivity() {
             editor.apply()
             nextBtn.setOnClickListener {
                 startActivity(Intent(this@HeightAct, DashboardAct::class.java))
-                finish()
+                finishAffinity()
             }
 //
         }
