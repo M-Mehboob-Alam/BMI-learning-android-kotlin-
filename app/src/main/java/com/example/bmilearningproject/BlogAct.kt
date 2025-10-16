@@ -1,0 +1,53 @@
+package com.example.bmilearningproject
+
+import android.os.Bundle
+import android.widget.LinearLayout
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bmilearningproject.adapter.BlogTopAdapter
+import com.example.bmilearningproject.databinding.ActivityBlogBinding
+import com.example.bmilearningproject.model.BlogTopModel
+
+class BlogAct : AppCompatActivity() {
+
+    val TAG = "BlogAct"
+    private lateinit var blogTopAdapter : BlogTopAdapter
+    private lateinit var menuList : ArrayList<BlogTopModel>
+    private lateinit var binding: ActivityBlogBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        binding = ActivityBlogBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        binding.apply {
+            backIc.setOnClickListener {
+                finish()
+            }
+
+            menuList = ArrayList<BlogTopModel>()
+            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
+            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
+            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
+            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
+            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
+
+            topBlogRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.HORIZONTAL, false)
+            blogTopAdapter = BlogTopAdapter(menuList)
+            topBlogRV.adapter = BlogTopAdapter(menuList)
+
+
+//            blogTopAdapter  = BlogTopAdapter(menuList)
+//            topBlogRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.HORIZONTAL, false)
+//            topBlogRV.adapter = blogTopAdapter
+
+        }
+    }
+}

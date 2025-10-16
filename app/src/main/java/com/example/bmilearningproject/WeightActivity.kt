@@ -42,6 +42,7 @@ class WeightActivity : AppCompatActivity() {
                 changeSelectedBg("libs")
                 changeHeightUnit("libs")
                 editor.putString("weightUnit", "libs")
+                editor.apply()
 //                Toast.makeText(this@MainActivity, "libs clicked", Toast.LENGTH_SHORT).show()
 
             }
@@ -50,12 +51,13 @@ class WeightActivity : AppCompatActivity() {
                 changeHeightValue(result.toFloat())
                 Log.i(TAG, "onCreate: $result")
                 editor.putFloat("weightValue", result)
+                editor.apply()
             }
 
-            editor.apply()
+
             nextBtn.setOnClickListener {
                 startActivity(Intent(this@WeightActivity, HeightAct::class.java))
-                finish()
+//                finish()
             }
         }
     }

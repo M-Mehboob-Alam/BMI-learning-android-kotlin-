@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bmilearningproject.databinding.ActivitySplashBinding
+import com.example.bmilearningproject.util.Constant
 
 class SplashAct : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
@@ -37,8 +38,14 @@ class SplashAct : AppCompatActivity() {
         )
         Handler(Looper.getMainLooper()).postDelayed(
             {
-                val intent = Intent(this@SplashAct, GenderAct::class.java)
-                startActivity(intent)
+                val isCompletedSetting = pref.getBoolean(Constant.isCompletedSettingKey, false)
+                Log.i(TAG, "onCreate: is completed setting value on splash $isCompletedSetting")
+                if (isCompletedSetting){
+                    startActivity(Intent(this@SplashAct, DashboardAct::class.java))
+                }else{
+                    val intent = Intent(this@SplashAct, GenderAct::class.java)
+                    startActivity(intent)
+                }
                 finish()
             }, 3000
         )

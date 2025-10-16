@@ -39,12 +39,14 @@ class HeightAct : AppCompatActivity() {
                 changeHeightUnit("cm")
                 changeSelectedBg("cm")
                 editor.putString("heightUnit", "cm")
+                editor.apply()
 //                Toast.makeText(this@HeightAct, "cm clicked", Toast.LENGTH_SHORT).show()
             }
             ftTxtView.setOnClickListener {
                 changeSelectedBg("ft")
                 changeHeightUnit("ft")
                 editor.putString("heightUnit", "ft")
+                editor.apply()
 //                Toast.makeText(this@MainActivity, "ft clicked", Toast.LENGTH_SHORT).show()
 
             }
@@ -53,9 +55,11 @@ class HeightAct : AppCompatActivity() {
                 changeHeightValue(result.toFloat())
                 Log.i(TAG, "onCreate: $result")
                 editor.putFloat("heightValue", result)
+                editor.apply()
             }
 
-            editor.apply()
+
+
             nextBtn.setOnClickListener {
                 startActivity(Intent(this@HeightAct, DashboardAct::class.java))
                 finishAffinity()

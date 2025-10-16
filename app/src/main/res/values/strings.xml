@@ -27,4 +27,10 @@
     <string name="height">Height</string>
     <string name="age">Age</string>
     <string name="_20">20</string>
+    <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="our_ratting">Our Ratting</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="more_apps">More Apps</string>
+    <string name="item_name">Item Name</string>
 </resources>

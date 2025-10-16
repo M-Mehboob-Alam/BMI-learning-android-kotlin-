@@ -156,6 +156,7 @@
         app:layout_constraintVertical_bias="0.09">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/weightValueView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -209,7 +210,7 @@
                 />
 
             <TextView
-                android:id="@+id/libsTxtView"
+                android:id="@+id/libsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:layout_gravity="center"
@@ -244,6 +245,7 @@
         app:layout_constraintVertical_bias="0.1">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/heightValueView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -282,7 +284,7 @@
 
             >
             <TextView
-                android:id="@+id/cmTextView"
+                android:id="@+id/ftTextView"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:text="@string/ft"
@@ -298,7 +300,7 @@
                 />
 
             <TextView
-                android:id="@+id/ftTxtView"
+                android:id="@+id/cmTextView"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:layout_gravity="center"
@@ -334,6 +336,7 @@
         app:layout_constraintVertical_bias="0.1">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ageValueView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -369,40 +372,73 @@
         app:cardBackgroundColor="@color/bottom_navigation_bg"
         app:cardCornerRadius="50dp"
         android:layout_margin="10dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/bottom_navigation_corner"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:weightSum="4"
+            android:weightSum="3"
+            android:gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:showDividers="middle"
+            android:divider="@drawable/h_spacing_16"
             >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="33dp"
+                app:strokeWidth="0dp"
+                >
 
             <ImageView
                 android:id="@+id/bmr"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/bmr_ic"
-                android:layout_weight="1"
                 />
-            <ImageView
-                android:id="@+id/bmi"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="52dp"
-                android:src="@drawable/bmi_ic"
-                android:layout_weight="2"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/common_color"
+                app:cardCornerRadius="33dp"
+                >
+
+            <ImageView
+                android:id="@+id/bmi"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/bmi_without_bg_ic"
                 android:layout_gravity="center"
                 />
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="33dp"
+                app:strokeWidth="0dp"
+                >
+
             <ImageView
                 android:id="@+id/blog"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/blog_ic"
-                android:layout_weight="1"
                 />
+            </com.google.android.material.card.MaterialCardView>
 
 
 
         </LinearLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

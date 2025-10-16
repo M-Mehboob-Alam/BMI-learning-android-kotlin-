@@ -12,22 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BMILearningProject">
         <activity
+            android:name=".BlogAct"
+            android:exported="false" />
+        <activity
+            android:name=".SettingAct"
+            android:exported="false" />
+        <activity
             android:name=".DashboardAct"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:exported="false"></activity>
         <activity
             android:name=".GenderAct"
             android:exported="false" />
         <activity
             android:name=".SplashAct"
-            android:exported="false">
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".AgeAct"
