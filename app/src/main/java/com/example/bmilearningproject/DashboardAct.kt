@@ -3,13 +3,15 @@ package com.example.bmilearningproject
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bmilearningproject.databinding.ActivityDashboardBinding
 import com.example.bmilearningproject.util.Constant
+import com.example.bmilearningproject.util.getCurrentActiveIndicator
+import com.example.bmilearningproject.util.getHeightUnit
+import com.example.bmilearningproject.util.getWeightUnit
 
 class DashboardAct : AppCompatActivity() {
     val TAG = "DashboardAct"
@@ -44,6 +46,7 @@ class DashboardAct : AppCompatActivity() {
         binding.apply {
             settingIc.setOnClickListener {
                 startActivity(Intent(this@DashboardAct, SettingAct::class.java))
+                finish()
             }
             if (gender =="female"){
 //                Log.i(TAG, "onCreate: gender is female selected")
@@ -62,34 +65,78 @@ class DashboardAct : AppCompatActivity() {
             ageValueView.setText(String.format("%.2f", ageValue))
             weightValueView.setText(String.format("%.2f", weightValue))
             heightValueView.setText(String.format("%.2f", heightValue))
-
-            if (heightUnit == "ft"){
-                cmTextView.setTextColor(getColor(R.color.common_color_light))
-                cmTextView.setBackgroundResource(R.drawable.bg_white)
-                ftTextView.setTextColor(getColor(R.color.white))
-                ftTextView.setBackgroundResource(R.drawable.bg_common)
-            }else{
-                cmTextView.setTextColor(getColor(R.color.white))
-                cmTextView.setBackgroundResource(R.drawable.bg_common)
-                ftTextView.setTextColor(getColor(R.color.common_color_light))
-                ftTextView.setBackgroundResource(R.drawable.bg_white)
+            getWeightUnit(this@DashboardAct, weightUnit, libsTextView, kgTextView)
+            kgTextView.setOnClickListener {
+                getWeightUnit(this@DashboardAct, "kg", libsTextView, kgTextView)
             }
-            if (weightUnit == "libs"){
-                libsTextView.setTextColor(getColor(R.color.white))
-                libsTextView.setBackgroundResource(R.drawable.bg_common)
-                kgTextView.setTextColor(getColor(R.color.common_color_light))
-                kgTextView.setBackgroundResource(R.drawable.bg_white)
-            }else{
-                kgTextView.setTextColor(getColor(R.color.white))
-                kgTextView.setBackgroundResource(R.drawable.bg_common)
-                libsTextView.setTextColor(getColor(R.color.common_color_light))
-                libsTextView.setBackgroundResource(R.drawable.bg_white)
+            libsTextView.setOnClickListener {
+                getWeightUnit(this@DashboardAct, "libs", libsTextView, kgTextView)
             }
+            getHeightUnit(this@DashboardAct, heightUnit, ftTextView, cmTextView)
+            ftTextView.setOnClickListener {
+                getHeightUnit(this@DashboardAct, "ft", ftTextView, cmTextView)
+            }
+            cmTextView.setOnClickListener {
+                getHeightUnit(this@DashboardAct, "cm", ftTextView, cmTextView)
+            }
+            bmr.setOnClickListener {
+                getCurrentActiveIndicator(this@DashboardAct, "bmr", bmiCard, bmrCard, blogCard, bmi, bmr, blog)
 
-            blog.setOnClickListener {
+                startActivity(Intent(this@DashboardAct, BmrAct::class.java))
+            }
+            bmi.setOnClickListener {
+                getCurrentActiveIndicator(this@DashboardAct, "bmi", bmiCard, bmrCard, blogCard, bmi, bmr, blog)
                 startActivity(Intent(this@DashboardAct, BlogAct::class.java))
             }
 
+
+
+//            if (heightUnit == "ft"){
+//                cmTextView.setTextColor(getColor(R.color.common_color_light))
+//                cmTextView.setBackgroundResource(R.drawable.bg_white)
+//                ftTextView.setTextColor(getColor(R.color.white))
+//                ftTextView.setBackgroundResource(R.drawable.bg_common)
+//            }else{
+//                cmTextView.setTextColor(getColor(R.color.white))
+//                cmTextView.setBackgroundResource(R.drawable.bg_common)
+//                ftTextView.setTextColor(getColor(R.color.common_color_light))
+//                ftTextView.setBackgroundResource(R.drawable.bg_white)
+//            }
+//            if (weightUnit == "libs"){
+//                libsTextView.setTextColor(getColor(R.color.white))
+//                libsTextView.setBackgroundResource(R.drawable.bg_common)
+//                kgTextView.setTextColor(getColor(R.color.common_color_light))
+//                kgTextView.setBackgroundResource(R.drawable.bg_white)
+//            }else{
+//                kgTextView.setTextColor(getColor(R.color.white))
+//                kgTextView.setBackgroundResource(R.drawable.bg_common)
+//                libsTextView.setTextColor(getColor(R.color.common_color_light))
+//                libsTextView.setBackgroundResource(R.drawable.bg_white)
+//            }
+
+
+
+            blog.setOnClickListener {
+                getCurrentActiveIndicator(this@DashboardAct, "blog", bmiCard, bmrCard, blogCard, bmi, bmr, blog)
+
+                startActivity(Intent(this@DashboardAct, BlogAct::class.java))
+
+            }
+
         }
+    }
+    override fun onStart() {
+        super.onStart()
+
+        getCurrentActiveIndicator(
+            this@DashboardAct,
+            "bmi",
+            binding.bmiCard,
+            binding.bmrCard,
+            binding.blogCard,
+            binding.bmi,
+            binding.bmr,
+            binding.blog
+        )
     }
 }

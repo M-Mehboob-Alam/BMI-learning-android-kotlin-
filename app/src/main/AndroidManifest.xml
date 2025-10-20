@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BMILearningProject">
         <activity
+            android:name=".BmrAct"
+            android:exported="false" />
+        <activity
             android:name=".BlogAct"
             android:exported="false" />
         <activity
@@ -19,7 +22,7 @@
             android:exported="false" />
         <activity
             android:name=".DashboardAct"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".GenderAct"
             android:exported="false" />

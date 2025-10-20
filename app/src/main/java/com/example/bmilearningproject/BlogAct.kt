@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bmilearningproject.adapter.BlogTopAdapter
 import com.example.bmilearningproject.databinding.ActivityBlogBinding
@@ -34,12 +35,13 @@ class BlogAct : AppCompatActivity() {
 
             menuList = ArrayList<BlogTopModel>()
             menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
-            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
-            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
+            menuList.add(BlogTopModel(R.drawable.admin_panel_settings_ic,  "BMI Blog Act"))
+            menuList.add(BlogTopModel(R.drawable.bmi_without_bg_ic,  "BMI Blog Act"))
             menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
             menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
 
             topBlogRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.HORIZONTAL, false)
+//            topBlogRV.layoutManager = GridLayoutManager(this@BlogAct, 3)
             blogTopAdapter = BlogTopAdapter(menuList)
             topBlogRV.adapter = BlogTopAdapter(menuList)
 
