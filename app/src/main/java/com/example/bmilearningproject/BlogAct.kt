@@ -63,6 +63,7 @@ class BlogAct : AppCompatActivity() {
 
             blogGridList.add(BlogGridModel("This is main heading from blogAct"))
             blogGridList.add(BlogGridModel("This is main heading 2"))
+            blogGridList.add(BlogGridModel("This is main heading 3"))
             blogGridRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.VERTICAL, false)
             blogGridAdapter = BlogGridAdapter(blogGridList)
             blogGridRV.adapter = BlogGridAdapter(blogGridList)
