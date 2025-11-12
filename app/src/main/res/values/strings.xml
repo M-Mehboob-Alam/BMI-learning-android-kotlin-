@@ -33,4 +33,8 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="more_apps">More Apps</string>
     <string name="item_name">Item Name</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="blog">Blog</string>
+    <string name="bmr">BMR</string>
+    <string name="this_is_main_heading">This is main heading</string>
 </resources>

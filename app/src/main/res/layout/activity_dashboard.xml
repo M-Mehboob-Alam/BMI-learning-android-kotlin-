@@ -17,7 +17,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dashboard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/settingIc"
+        app:layout_constraintBottom_toBottomOf="@id/settingIc"
+        app:layout_constraintTop_toTopOf="@id/settingIc"
+        android:textColor="@color/common_color"
+        app:layout_constraintHorizontal_bias="0.6"
+        android:textSize="@dimen/_14ssp"
+        android:fontFamily="@font/poppins_semibold"
+        />
 
     <ImageView
         android:id="@+id/settingIc"

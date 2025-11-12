@@ -8,13 +8,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.bmilearningproject.adapter.BlogGridAdapter
 import com.example.bmilearningproject.adapter.BlogTopAdapter
 import com.example.bmilearningproject.databinding.ActivityBlogBinding
+import com.example.bmilearningproject.model.BlogGridModel
 import com.example.bmilearningproject.model.BlogTopModel
 
 class BlogAct : AppCompatActivity() {
 
     val TAG = "BlogAct"
+    private  lateinit var blogGridAdapter : BlogGridAdapter
+    private  lateinit var blogGridList : ArrayList<BlogGridModel>
     private lateinit var blogTopAdapter : BlogTopAdapter
     private lateinit var menuList : ArrayList<BlogTopModel>
     private lateinit var binding: ActivityBlogBinding
@@ -28,6 +33,9 @@ class BlogAct : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+
         binding.apply {
             backIc.setOnClickListener {
                 finish()
@@ -49,6 +57,16 @@ class BlogAct : AppCompatActivity() {
 //            blogTopAdapter  = BlogTopAdapter(menuList)
 //            topBlogRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.HORIZONTAL, false)
 //            topBlogRV.adapter = blogTopAdapter
+
+
+            blogGridList = ArrayList<BlogGridModel>()
+
+            blogGridList.add(BlogGridModel("This is main heading from blogAct"))
+            blogGridList.add(BlogGridModel("This is main heading 2"))
+            blogGridRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.VERTICAL, false)
+            blogGridAdapter = BlogGridAdapter(blogGridList)
+            blogGridRV.adapter = BlogGridAdapter(blogGridList)
+
 
         }
     }
