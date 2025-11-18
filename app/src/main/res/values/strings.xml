@@ -37,4 +37,8 @@
     <string name="blog">Blog</string>
     <string name="bmr">BMR</string>
     <string name="this_is_main_heading">This is main heading</string>
+    <string name="we_are_working_on_design_layout">We are working on design layout</string>
+    <string name="_4_min">4 min</string>
+    <string name="see_more">see more</string>
+    <string name="see_more_icon">see more icon</string>
 </resources>

@@ -1,27 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="@dimen/_100sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_5sdp"
+    android:id="@+id/blogGridItemLayouot"
 
-    <com.google.android.material.card.MaterialCardView
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        app:cardBackgroundColor="@color/bottom_navigation_bg"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/blog_grid_item_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.05"
-        android:layout_marginTop="@dimen/_5sdp"
+
         >
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/history"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="@id/item"
+            app:layout_constraintEnd_toEndOf="@id/item"
+            app:layout_constraintTop_toTopOf="@id/item"
+            app:layout_constraintBottom_toBottomOf="@id/item"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintVertical_bias="0.09">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:paddingHorizontal="@dimen/_8sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:src="@drawable/history"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    app:tint="@color/common_color" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_4_min"
+                    android:textColor="@android:color/black"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
         <TextView
             android:id="@+id/mainHeading"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_160sdp"
             android:layout_height="wrap_content"
-            android:text="@string/this_is_main_heading"
+            android:text="@string/we_are_working_on_design_layout"
             android:textColor="@color/white"
-            android:layout_margin="10dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintTop_toBottomOf="@id/history"
+            app:layout_constraintStart_toStartOf="@id/history"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintVertical_bias="0.05"
+            android:maxLines="2"
+            android:ellipsize="end"
             />
-    </com.google.android.material.card.MaterialCardView>
+        <ImageView
+            android:id="@+id/blogImage"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:src="@drawable/bmi_logo"
+            android:contentDescription="@string/logo"
+            app:layout_constraintStart_toEndOf="@id/mainHeading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitCenter"
+            app:layout_constraintHorizontal_bias="0.9"
+            />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="@id/mainHeading"
+            app:layout_constraintStart_toStartOf="@id/mainHeading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.8"
+            app:strokeColor="@color/black"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/black"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/see_more"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/white"
+                    />
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:contentDescription="@string/see_more_icon"
+                    android:src="@drawable/see_more_ic"
+                    android:layout_gravity="center"
+                    app:tint="@color/white" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

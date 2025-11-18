@@ -1,6 +1,8 @@
 package com.example.bmilearningproject
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,11 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmilearningproject.adapter.BlogGridAdapter
 import com.example.bmilearningproject.adapter.BlogTopAdapter
+import com.example.bmilearningproject.callback.BlogGridMenuListener
+import com.example.bmilearningproject.callback.BlogTopMenuListener
 import com.example.bmilearningproject.databinding.ActivityBlogBinding
 import com.example.bmilearningproject.model.BlogGridModel
 import com.example.bmilearningproject.model.BlogTopModel
 
-class BlogAct : AppCompatActivity() {
+class BlogAct : AppCompatActivity(), BlogTopMenuListener, BlogGridMenuListener {
 
     val TAG = "BlogAct"
     private  lateinit var blogGridAdapter : BlogGridAdapter
@@ -34,24 +38,22 @@ class BlogAct : AppCompatActivity() {
             insets
         }
 
-
-
         binding.apply {
             backIc.setOnClickListener {
                 finish()
             }
 
             menuList = ArrayList<BlogTopModel>()
-            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
-            menuList.add(BlogTopModel(R.drawable.admin_panel_settings_ic,  "BMI Blog Act"))
-            menuList.add(BlogTopModel(R.drawable.bmi_without_bg_ic,  "BMI Blog Act"))
-            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
-            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
+            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI"))
+            menuList.add(BlogTopModel(R.drawable.admin_panel_settings_ic,  "BMR"))
+//            menuList.add(BlogTopModel(R.drawable.bmi_without_bg_ic,  "BMI Blog Act"))
+//            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
+//            menuList.add(BlogTopModel(R.drawable.bmi_logo,  "BMI Blog Act"))
 
             topBlogRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.HORIZONTAL, false)
 //            topBlogRV.layoutManager = GridLayoutManager(this@BlogAct, 3)
-            blogTopAdapter = BlogTopAdapter(menuList)
-            topBlogRV.adapter = BlogTopAdapter(menuList)
+            blogTopAdapter = BlogTopAdapter(menuList,this@BlogAct)
+            topBlogRV.adapter = BlogTopAdapter(menuList, this@BlogAct)
 
 
 //            blogTopAdapter  = BlogTopAdapter(menuList)
@@ -59,16 +61,55 @@ class BlogAct : AppCompatActivity() {
 //            topBlogRV.adapter = blogTopAdapter
 
 
-            blogGridList = ArrayList<BlogGridModel>()
-
-            blogGridList.add(BlogGridModel("This is main heading from blogAct"))
-            blogGridList.add(BlogGridModel("This is main heading 2"))
-            blogGridList.add(BlogGridModel("This is main heading 3"))
-            blogGridRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.VERTICAL, false)
-            blogGridAdapter = BlogGridAdapter(blogGridList)
-            blogGridRV.adapter = BlogGridAdapter(blogGridList)
-
+//            blogGridList = ArrayList<BlogGridModel>()
+//
+//            blogGridList.add(BlogGridModel("This is main heading from blogAct"))
+//            blogGridList.add(BlogGridModel("This is main heading 2"))
+//            blogGridList.add(BlogGridModel("This is main heading 3"))
+//            blogGridRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.VERTICAL, false)
+//            blogGridAdapter = BlogGridAdapter(blogGridList)
+//            blogGridRV.adapter = BlogGridAdapter(blogGridList)
+              setBlogGridAdapter("All")
 
         }
+    }
+
+    override fun onBlogTopMenuClick(
+        model: BlogTopModel,
+        text: View
+    ) {
+       setBlogGridAdapter(model.tile)
+
+    }
+
+    private fun setBlogGridAdapter( title : String){
+        binding.apply {
+            blogGridList = ArrayList<BlogGridModel>()
+            blogGridRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.VERTICAL, false)
+            if (title === "BMI"){
+                blogGridList.add(BlogGridModel("This is main heading from BMI","10 min"))
+                blogGridList.add(BlogGridModel("This is main heading 2 BMI"))
+                blogGridList.add(BlogGridModel("This is main heading 3 BMI"))
+            }else if(title === "BMR"){
+                blogGridList.add(BlogGridModel("This is main heading from BMR"))
+                blogGridList.add(BlogGridModel("This is main heading 2 BMR"))
+                blogGridList.add(BlogGridModel("This is main heading 3 BMR"))
+            }else{
+                blogGridList.add(BlogGridModel("This is main heading from BMI"))
+                blogGridList.add(BlogGridModel("This is main heading 2 BMI"))
+                blogGridList.add(BlogGridModel("This is main heading 3 BMI"))
+                blogGridList.add(BlogGridModel("This is main heading from BMR"))
+                blogGridList.add(BlogGridModel("This is main heading 2 BMR"))
+                blogGridList.add(BlogGridModel("This is main heading 3 BMR"))
+            }
+
+            blogGridAdapter = BlogGridAdapter(blogGridList,this@BlogAct)
+            blogGridRV.adapter = BlogGridAdapter(blogGridList,this@BlogAct)
+        }
+    }
+
+    override fun onBlogGridMenuClick(model: BlogGridModel) {
+        TODO("Not yet implemented")
+
     }
 }

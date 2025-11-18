@@ -140,7 +140,7 @@
                 android:id="@+id/female_card"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:src="@drawable/female_image"
+                android:src="@drawable/femal_ava_img"
                 android:layout_gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
