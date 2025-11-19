@@ -1,41 +1,31 @@
 package com.example.bmilearningproject
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.bmilearningproject.databinding.ActivityBlogPostDetailBinding
-import com.example.bmilearningproject.model.BlogGridModel
+import com.example.bmilearningproject.databinding.ActivityResultBinding
 
-class BlogPostDetailAct : AppCompatActivity() {
-    private lateinit var binding: ActivityBlogPostDetailBinding
-    val TAG = "BlogPostDetailAct"
+class ResultAct : AppCompatActivity() {
+    private lateinit var binding : ActivityResultBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityBlogPostDetailBinding.inflate(layoutInflater)
+        binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val name = intent.getStringExtra("name")
         binding.apply {
+            title.text = name
             backIc.setOnClickListener {
                 finish()
             }
-//            var mainHeading = intent.getStringExtra("mainHeading")
-//            var time = intent.getStringExtra("time")
-                var model = intent.getParcelableExtra<BlogGridModel>("model")
-            Log.i(TAG, "onCreate: ${model?.mainHeading}")
-            title.text = model?.mainHeading
-            time.text = model?.time
-            des.text = model?.des
-
-
         }
-
     }
 }
+

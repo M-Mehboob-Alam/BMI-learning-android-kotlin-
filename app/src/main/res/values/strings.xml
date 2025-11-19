@@ -41,4 +41,7 @@
     <string name="_4_min">4 min</string>
     <string name="see_more">see more</string>
     <string name="see_more_icon">see more icon</string>
+    <string name="blog_post_details">Blog Post Details</string>
+    <string name="the_standard_lorem_ipsum_passage_has_been_a_printer_s_friend_for_centuries_like_stock_photos_today_it_served_as_a_placeholder_for_actual_content_the_original_text_comes_from_cicero_s_philosophical_work_written_in_45_bc">The standard lorem ipsum passage has been a printer\'s friend for centuries. Like stock photos today, it served as a placeholder for actual content. The original text comes from Cicero\'s philosophical work written in 45 BC.</string>
+    <string name="result">Result</string>
 </resources>

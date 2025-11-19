@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BMILearningProject">
         <activity
+            android:name=".ResultAct"
+            android:exported="false" />
+        <activity
             android:name=".BlogPostDetailAct"
             android:exported="false" />
         <activity

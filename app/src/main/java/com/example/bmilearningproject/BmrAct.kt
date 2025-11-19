@@ -80,6 +80,12 @@ class BmrAct : AppCompatActivity() {
             backIc.setOnClickListener {
                 finish()
             }
+                    nextBtn.setOnClickListener {
+                        val intent = Intent(this@BmrAct, ResultAct::class.java)
+                        intent.putExtra("name", "BMR")
+                        startActivity(intent)
+
+                    }
         }
     }
 }

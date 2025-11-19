@@ -1,7 +1,9 @@
 package com.example.bmilearningproject
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
@@ -18,11 +20,16 @@ import com.example.bmilearningproject.callback.BlogTopMenuListener
 import com.example.bmilearningproject.databinding.ActivityBlogBinding
 import com.example.bmilearningproject.model.BlogGridModel
 import com.example.bmilearningproject.model.BlogTopModel
+import org.json.JSONArray
+import java.io.BufferedReader
 
 class BlogAct : AppCompatActivity(), BlogTopMenuListener, BlogGridMenuListener {
 
     val TAG = "BlogAct"
     private  lateinit var blogGridAdapter : BlogGridAdapter
+
+    private lateinit var bmiJsonReader :  JSONArray
+    private lateinit var bmrJsonReader :  JSONArray
     private  lateinit var blogGridList : ArrayList<BlogGridModel>
     private lateinit var blogTopAdapter : BlogTopAdapter
     private lateinit var menuList : ArrayList<BlogTopModel>
@@ -85,22 +92,58 @@ class BlogAct : AppCompatActivity(), BlogTopMenuListener, BlogGridMenuListener {
     private fun setBlogGridAdapter( title : String){
         binding.apply {
             blogGridList = ArrayList<BlogGridModel>()
+            val bmiJsonFileReader = getJsonFileReader(R.raw.bmi_blog)
+            val bmrJsonFileReader = getJsonFileReader(R.raw.bmr_blog)
+            bmiJsonReader = JSONArray(bmiJsonFileReader)
+            bmrJsonReader = JSONArray(bmrJsonFileReader)
             blogGridRV.layoutManager = LinearLayoutManager(this@BlogAct, LinearLayoutManager.VERTICAL, false)
             if (title === "BMI"){
-                blogGridList.add(BlogGridModel("This is main heading from BMI","10 min"))
-                blogGridList.add(BlogGridModel("This is main heading 2 BMI"))
-                blogGridList.add(BlogGridModel("This is main heading 3 BMI"))
+                for(i in 0 until bmiJsonReader.length()){
+                    val bmiJsonObject = bmiJsonReader.getJSONObject(i)
+                    val mainHeading = bmiJsonObject.getString("title")
+                    val des = bmiJsonObject.getString("description")
+                    val parseMainHeading = Html.fromHtml(mainHeading, Html.FROM_HTML_MODE_LEGACY)
+                    val parseDes = Html.fromHtml(des, Html.FROM_HTML_MODE_LEGACY)
+                    val time = bmiJsonObject.getString("read_time")
+
+                    blogGridList.add(BlogGridModel(parseMainHeading.toString(),time,parseDes.toString()))
+                }
+//                blogGridList.add(BlogGridModel("This is main heading from BMI","10 min"))
+//                blogGridList.add(BlogGridModel("This is main heading 2 BMI"))
+//                blogGridList.add(BlogGridModel("This is main heading 3 BMI"))
             }else if(title === "BMR"){
-                blogGridList.add(BlogGridModel("This is main heading from BMR"))
-                blogGridList.add(BlogGridModel("This is main heading 2 BMR"))
-                blogGridList.add(BlogGridModel("This is main heading 3 BMR"))
+                for(i in 0 until bmrJsonReader.length()){
+                    val bmiJsonObject = bmrJsonReader.getJSONObject(i)
+                    val mainHeading = bmiJsonObject.getString("title")
+                    val des = bmiJsonObject.getString("description")
+                    val parseMainHeading = Html.fromHtml(mainHeading, Html.FROM_HTML_MODE_LEGACY)
+                    val parseDes = Html.fromHtml(des, Html.FROM_HTML_MODE_LEGACY)
+                    val time = bmiJsonObject.getString("read_time")
+
+                    blogGridList.add(BlogGridModel(parseMainHeading.toString(),time,parseDes.toString()))
+                }
+
+//                blogGridList.add(BlogGridModel("This is main heading from BMR"))
+//                blogGridList.add(BlogGridModel("This is main heading 2 BMR"))
+//                blogGridList.add(BlogGridModel("This is main heading 3 BMR"))
             }else{
-                blogGridList.add(BlogGridModel("This is main heading from BMI"))
-                blogGridList.add(BlogGridModel("This is main heading 2 BMI"))
-                blogGridList.add(BlogGridModel("This is main heading 3 BMI"))
-                blogGridList.add(BlogGridModel("This is main heading from BMR"))
-                blogGridList.add(BlogGridModel("This is main heading 2 BMR"))
-                blogGridList.add(BlogGridModel("This is main heading 3 BMR"))
+
+                for(i in 0 until bmiJsonReader.length()){
+                    val bmiJsonObject = bmiJsonReader.getJSONObject(i)
+                    val mainHeading = bmiJsonObject.getString("title")
+                    val des = bmiJsonObject.getString("description")
+                    val parseMainHeading = Html.fromHtml(mainHeading, Html.FROM_HTML_MODE_LEGACY)
+                    val parseDes = Html.fromHtml(des, Html.FROM_HTML_MODE_LEGACY)
+                    val time = bmiJsonObject.getString("read_time")
+
+                    blogGridList.add(BlogGridModel(parseMainHeading.toString(),time,parseDes.toString()))
+                }
+//                blogGridList.add(BlogGridModel("This is main heading from BMI"))
+//                blogGridList.add(BlogGridModel("This is main heading 2 BMI"))
+//                blogGridList.add(BlogGridModel("This is main heading 3 BMI"))
+//                blogGridList.add(BlogGridModel("This is main heading from BMR"))
+//                blogGridList.add(BlogGridModel("This is main heading 2 BMR"))
+//                blogGridList.add(BlogGridModel("This is main heading 3 BMR"))
             }
 
             blogGridAdapter = BlogGridAdapter(blogGridList,this@BlogAct)
@@ -109,7 +152,18 @@ class BlogAct : AppCompatActivity(), BlogTopMenuListener, BlogGridMenuListener {
     }
 
     override fun onBlogGridMenuClick(model: BlogGridModel) {
-        TODO("Not yet implemented")
+       var intent = Intent(this@BlogAct, BlogPostDetailAct::class.java)
+//        intent.putExtra("mainHeading", model.mainHeading)
+//        intent.putExtra("time", model.time)
+        intent.putExtra("model", model)
+        startActivity(intent)
 
+    }
+    private fun  getJsonFileReader(file:Int) : String {
+        val getRawFile = resources.openRawResource(file)
+        val getRedJson = BufferedReader(getRawFile.reader())
+        return getRedJson.use {
+            it.readText()
+        }
     }
 }

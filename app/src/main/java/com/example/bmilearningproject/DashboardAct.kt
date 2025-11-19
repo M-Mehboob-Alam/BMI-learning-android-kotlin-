@@ -44,6 +44,11 @@ class DashboardAct : AppCompatActivity() {
 
         Log.i(TAG, "Gender: $gender  Height: $heightUnit $heightValue Weight: $weightUnit $weightValue Age: $ageUnit $ageValue isCompletedSetting: $isCompletedSetting")
         binding.apply {
+            nextBtn.setOnClickListener {
+                val intent = Intent(this@DashboardAct, ResultAct::class.java)
+                intent.putExtra("name", "BMI")
+                startActivity(intent)
+            }
             settingIc.setOnClickListener {
                 startActivity(Intent(this@DashboardAct, SettingAct::class.java))
                 finish()
