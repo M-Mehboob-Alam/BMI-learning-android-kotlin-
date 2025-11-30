@@ -1,5 +1,6 @@
 package com.example.bmilearningproject
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +11,11 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.bmilearningproject.databinding.ActivityDashboardBinding
 import com.example.bmilearningproject.util.Constant
 import com.example.bmilearningproject.util.getCurrentActiveIndicator
+import com.example.bmilearningproject.util.getHeightInCm
+import com.example.bmilearningproject.util.getHeightInFt
 import com.example.bmilearningproject.util.getHeightUnit
+import com.example.bmilearningproject.util.getWeightInKg
+import com.example.bmilearningproject.util.getWeightInLbs
 import com.example.bmilearningproject.util.getWeightUnit
 
 class DashboardAct : AppCompatActivity() {
@@ -30,9 +35,9 @@ class DashboardAct : AppCompatActivity() {
         val pref = getSharedPreferences(Constant.sharedPrefKey, MODE_PRIVATE)
         val editor = pref.edit()
         val gender = pref.getString(Constant.genderKey, "male")
-        val heightUnit = pref.getString("heightUnit", "cm")
-        val heightValue = pref.getFloat("heightValue", 0f)
-        val weightUnit = pref.getString("weightUnit", "kg")
+        val heightUnitCode = pref.getString("heightUnit", "cm")
+        val heightValueCode = pref.getFloat("heightValue", 0f)
+        val weightUnitValue = pref.getString("weightUnit", "kg")
         val weightValue = pref.getFloat("weightValue", 0f)
         val ageUnit = pref.getString("ageUnit", "y")
         val ageValue = pref.getFloat("ageValue", 0f)
@@ -42,7 +47,7 @@ class DashboardAct : AppCompatActivity() {
             editor.apply()
         }
 
-        Log.i(TAG, "Gender: $gender  Height: $heightUnit $heightValue Weight: $weightUnit $weightValue Age: $ageUnit $ageValue isCompletedSetting: $isCompletedSetting")
+        Log.i(TAG, "Gender: $gender  Height: $heightUnitCode $heightValueCode Weight: $weightUnitValue $weightValue Age: $ageUnit $ageValue isCompletedSetting: $isCompletedSetting")
         binding.apply {
             nextBtn.setOnClickListener {
                 val intent = Intent(this@DashboardAct, ResultAct::class.java)
@@ -68,21 +73,43 @@ class DashboardAct : AppCompatActivity() {
 
             }
             ageValueView.setText(String.format("%.2f", ageValue))
+
             weightValueView.setText(String.format("%.2f", weightValue))
-            heightValueView.setText(String.format("%.2f", heightValue))
-            getWeightUnit(this@DashboardAct, weightUnit, libsTextView, kgTextView)
+            weightValueView.showSoftInputOnFocus = false
+            weightValueView.isFocusable = false
+            weightValueView.isCursorVisible = false
+            weightValueView.setOnClickListener {
+                showEditConfirmDialog()
+            }
+            heightValueView.setText(String.format("%.2f", heightValueCode))
+            getWeightUnit(this@DashboardAct, weightUnitValue, libsTextView, kgTextView)
             kgTextView.setOnClickListener {
                 getWeightUnit(this@DashboardAct, "kg", libsTextView, kgTextView)
+                val convertedWeightKg = getWeightInKg(weightValue)
+                weightValueView.setText(String.format("%.2f",convertedWeightKg))
+                weightUnit.hint = "Weight (kg)"
+                Log.i(TAG, "converted weight: $convertedWeightKg")
+
             }
             libsTextView.setOnClickListener {
                 getWeightUnit(this@DashboardAct, "libs", libsTextView, kgTextView)
+               val convertedWeight = getWeightInLbs(weightValue)
+                weightValueView.setText(String.format("%.2f", convertedWeight))
+                weightUnit.hint = "Weight (lbs)"
+                Log.i(TAG, "converted weight: $convertedWeight")
             }
-            getHeightUnit(this@DashboardAct, heightUnit, ftTextView, cmTextView)
+            getHeightUnit(this@DashboardAct, heightUnitCode, ftTextView, cmTextView)
             ftTextView.setOnClickListener {
                 getHeightUnit(this@DashboardAct, "ft", ftTextView, cmTextView)
+                val convertedHeightFt = getHeightInFt(heightValueCode)
+                heightValueView.setText(String.format("%.2f", convertedHeightFt))
+                heightUnit.hint = "Height (ft)"
             }
             cmTextView.setOnClickListener {
                 getHeightUnit(this@DashboardAct, "cm", ftTextView, cmTextView)
+                val convertedHeightCm = getHeightInCm(heightValueCode)
+                heightValueView.setText(String.format("%.2f", convertedHeightCm))
+                heightUnit.hint = "Height (cm)"
             }
             bmr.setOnClickListener {
                 getCurrentActiveIndicator(this@DashboardAct, "bmr", bmiCard, bmrCard, blogCard, bmi, bmr, blog)
@@ -143,5 +170,22 @@ class DashboardAct : AppCompatActivity() {
             binding.bmr,
             binding.blog
         )
+    }
+    private fun showEditConfirmDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Edit")
+            .setMessage("Are you sure you want to edit this field")
+            .setPositiveButton("Yes") { dialog, _ ->
+                dialog.dismiss()
+                Intent(this, WeightActivity::class.java).also {
+                    startActivity(it)
+                }
+                finish()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+
     }
 }

@@ -61,10 +61,10 @@ public class MyScaleView extends View {
 //		textPaint.setStrokeWidth(0);
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(getResources().getDimension(R.dimen.txt_size));
-        textPaint.setColor(context.getResources().getColor(R.color.common_color));
+        textPaint.setColor(context.getResources().getColor(R.color.green));
         goldenPaint = new Paint();
         goldenPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        goldenPaint.setColor(context.getResources().getColor(R.color.common_color));
+        goldenPaint.setColor(context.getResources().getColor(R.color.green));
         goldenPaint.setStrokeWidth(yellowLineStrokeWidth);
         goldenPaint.setStrokeJoin(Paint.Join.ROUND);
         goldenPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -80,6 +80,22 @@ public class MyScaleView extends View {
         mListener = onViewUpdateListener;
     }
 
+//	@Override
+//	public void onSizeChanged(int w, int h, int oldW, int oldH) {
+//		width = w;
+//		height = h;
+//		screenSize = height;
+//		pxmm = screenSize / 67.f;
+//		midScreenPoint = height / 2;
+//		endPoint = width - 40;
+//		if (isSizeChanged) {
+//			isSizeChanged = false;
+//			mainPoint = midScreenPoint - (userStartingPoint * 10 * pxmm);
+//		}
+//		gradientPaint.setShader(new LinearGradient(0, 0, width, rulersize, getResources().getColor(R.color.transparent),
+//				getResources().getColor(R.color.transparent), android.graphics.Shader.TileMode.MIRROR));
+//	}
+
     @Override
     public void onSizeChanged(int w, int h, int oldW, int oldH) {
         width = w;
@@ -88,13 +104,25 @@ public class MyScaleView extends View {
         pxmm = screenSize / 67.f;
         midScreenPoint = height / 2;
         endPoint = width - 40;
+
+        // If user previously requested a starting point before size was known,
+        // apply it now. Otherwise make sure mainPoint is consistent.
         if (isSizeChanged) {
             isSizeChanged = false;
-            mainPoint = midScreenPoint - (userStartingPoint * 10 * pxmm);
+            // userStartingPoint is in "units" (cm or ft * 10 etc in your logic)
+            mainPoint = midScreenPoint - (userStartingPoint * 10f * pxmm);
+        } else {
+            // ensure mainPoint is initialized (avoid NaN)
+            // keep existing mainPoint if set; otherwise default 0
+            if (Float.isNaN(mainPoint)) mainPoint = 0f;
         }
-        gradientPaint.setShader(new LinearGradient(0, 0, width, rulersize, getResources().getColor(R.color.transparent),
-                getResources().getColor(R.color.transparent), android.graphics.Shader.TileMode.MIRROR));
+
+        gradientPaint.setShader(new LinearGradient(0, 0, width, rulersize,
+                getResources().getColor(R.color.transparent),
+                getResources().getColor(R.color.transparent),
+                android.graphics.Shader.TileMode.MIRROR));
     }
+
 
     @Override
     public void onDraw(Canvas canvas) {
@@ -118,16 +146,7 @@ public class MyScaleView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        System.out.println("touch event fire");
-        mainPointClone = mainPoint;
-        if (mainPoint < 0) {
-            mainPointClone = -mainPoint;
-        }
-        float clickPoint = ((midScreenPoint + mainPointClone) / (pxmm * 10));
-        if (mListener != null) {
-            mListener.onViewUpdate((midScreenPoint + mainPointClone) / (pxmm * 10));
-        }
-        System.out.println("click point" + clickPoint + "");
+        // Process touch and update mainPoint correctly.
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 isMove = true;
@@ -135,71 +154,198 @@ public class MyScaleView extends View {
                 isUpward = false;
                 downpoint = event.getY();
                 downPointClone = event.getY();
-                break;
+                return true;
+
             case MotionEvent.ACTION_MOVE:
                 movablePoint = event.getY();
-                System.out.println("move");
+
+                // if user moved upwards (finger Y decreased) -> we move scale upward
                 if (downPointClone > movablePoint) {
-                    /**
-                     * if user first starts moving downward and then upwards then
-                     * this method makes it to move upward
-                     */
                     if (isUpward) {
                         downpoint = event.getY();
                         downPointClone = downpoint;
                     }
                     isDown = true;
                     isUpward = false;
-                    /**
-                     * make this differnce of 1, otherwise it moves very fast and
-                     * nothing shows clearly
-                     */
+
                     if (downPointClone - movablePoint > 1) {
-                        mainPoint = mainPoint + (-(downPointClone - movablePoint));
+                        float delta = (downPointClone - movablePoint);
+                        mainPoint -= delta; // moving upward => decrease mainPoint (move content up)
                         downPointClone = movablePoint;
+
+                        // optional clamp lower bound so you can't scroll infinitely
+                        // e.g., prevent mainPoint < -maxRange (choose a reasonable maxRange)
                         invalidate();
                     }
+
                 } else {
-                    // downwards
+                    // moved downward (finger Y increased) -> move scale downward
                     if (isMove) {
-                        /**
-                         * if user first starts moving upward and then downwards,
-                         * then this method makes it to move upward
-                         */
                         if (isDown) {
                             downpoint = event.getY();
                             downPointClone = downpoint;
                         }
                         isDown = false;
                         isUpward = true;
-                        if (movablePoint - downpoint > 1) {
-                            mainPoint = mainPoint + ((movablePoint - downPointClone));
+
+                        if (movablePoint - downPointClone > 1) {
+                            float delta = (movablePoint - downPointClone);
+                            mainPoint += delta; // moving down => increase mainPoint (move content down)
                             downPointClone = movablePoint;
-                            if (mainPoint > 0) {
-                                mainPoint = 0;
+
+                            // Prevent scrolling past top
+                            if (mainPoint > 0f) {
+                                mainPoint = 0f;
                                 isMove = false;
                             }
+
                             invalidate();
                         }
                     }
                 }
-                break;
+
+                // REPORT the value after we've updated mainPoint:
+                if (mListener != null) {
+                    // IMPORTANT: correct conversion from mainPoint -> units (cm)
+                    // clickPoint = distance (pixels) from midScreenPoint divided by pxmm per unit
+                    float clickPoint = (midScreenPoint - mainPoint) / (pxmm * 10f);
+                    mListener.onViewUpdate(clickPoint);
+                }
+                return true;
+
             case MotionEvent.ACTION_UP:
-                System.out.println("up");
+            case MotionEvent.ACTION_CANCEL:
+                // final report on up
+                if (mListener != null) {
+                    float clickPoint = (midScreenPoint - mainPoint) / (pxmm * 10f);
+                    mListener.onViewUpdate(clickPoint);
+                }
+                return true;
+
             default:
-                break;
+                return super.onTouchEvent(event);
         }
-        return true;
     }
 
+//
+//	@Override
+//	public boolean onTouchEvent(MotionEvent event) {
+//		System.out.println("touch event fire");
+//		mainPointClone = mainPoint;
+//		if (mainPoint < 0) {
+//			mainPointClone = -mainPoint;
+//		}
+////		float clickPoint = ((midScreenPoint + mainPointClone) / (pxmm * 10));
+//		float clickPoint = (midScreenPoint - mainPoint) / (pxmm * 10);
+//
+//		if (mListener != null) {
+    ////			mListener.onViewUpdate((midScreenPoint + mainPointClone) / (pxmm * 10));
+//			mListener.onViewUpdate(clickPoint);
+//
+//		}
+//		System.out.println("click point" + clickPoint + "");
+//		switch (event.getAction()) {
+//		case MotionEvent.ACTION_DOWN:
+//			isMove = true;
+//			isDown = false;
+//			isUpward = false;
+//			downpoint = event.getY();
+//			downPointClone = event.getY();
+//			break;
+//		case MotionEvent.ACTION_MOVE:
+//			movablePoint = event.getY();
+//			System.out.println("move");
+//			if (downPointClone > movablePoint) {
+//				/**
+//				 * if user first starts moving downward and then upwards then
+//				 * this method makes it to move upward
+//				 */
+//				if (isUpward) {
+//					downpoint = event.getY();
+//					downPointClone = downpoint;
+//				}
+//				isDown = true;
+//				isUpward = false;
+//				/**
+//				 * make this differnce of 1, otherwise it moves very fast and
+//				 * nothing shows clearly
+//				 */
+//				if (downPointClone - movablePoint > 1) {
+//					mainPoint = mainPoint + (-(downPointClone - movablePoint));
+//					downPointClone = movablePoint;
+//					invalidate();
+//				}
+//			} else {
+//				// downwards
+//				if (isMove) {
+//					/**
+//					 * if user first starts moving upward and then downwards,
+//					 * then this method makes it to move upward
+//					 */
+//					if (isDown) {
+//						downpoint = event.getY();
+//						downPointClone = downpoint;
+//					}
+//					isDown = false;
+//					isUpward = true;
+//					if (movablePoint - downpoint > 1) {
+//						mainPoint = mainPoint + ((movablePoint - downPointClone));
+//						downPointClone = movablePoint;
+//						if (mainPoint > 0) {
+//							mainPoint = 0;
+//							isMove = false;
+//						}
+//						invalidate();
+//					}
+//				}
+//			}
+//			break;
+//		case MotionEvent.ACTION_UP:
+//			System.out.println("up");
+//		default:
+//			break;
+//		}
+//		return true;
+//	}
+
+//	public void setStartingPoint(float point) {
+//		userStartingPoint = point;
+//		isSizeChanged = true;
+//		if (isFirstTime) {
+//			isFirstTime = false;
+//			if (mListener != null) {
+//				mListener.onViewUpdate(point);
+//			}
+//		}
+//	}
+
+//	public void setStartingPoint(float point) {
+//		userStartingPoint = point;
+//		mainPoint = midScreenPoint - (userStartingPoint * 10 * pxmm);
+//		invalidate(); // <-- Important!
+//
+//		if (mListener != null) {
+//			mListener.onViewUpdate(point);
+//		}
+//	}
+
     public void setStartingPoint(float point) {
+        // point = desired scale value in same units listener expects (e.g. cm)
         userStartingPoint = point;
         isSizeChanged = true;
-        if (isFirstTime) {
-            isFirstTime = false;
-            if (mListener != null) {
-                mListener.onViewUpdate(point);
-            }
+
+        // If midScreenPoint is already known (view sized), update immediately.
+        if (midScreenPoint > 0) {
+            mainPoint = midScreenPoint - (userStartingPoint * 10f * pxmm);
+            // clamp mainPoint so it doesn't produce nonsense (optional)
+            // For example, prevent mainPoint being too far positive:
+            if (mainPoint > 0f) mainPoint = 0f;
+            invalidate();
+        }
+
+        // First-time callback: give initial value
+        if (mListener != null) {
+            mListener.onViewUpdate(point);
         }
     }
 }

@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bmilearningproject.databinding.ActivityWeightBinding
+import com.example.bmilearningproject.util.Constant
+import com.example.bmilearningproject.util.getWeightInKg
+import com.example.bmilearningproject.util.getWeightInLbs
 import java.util.Locale
 
 class WeightActivity : AppCompatActivity() {
@@ -26,8 +29,25 @@ class WeightActivity : AppCompatActivity() {
         }
         val pref = getSharedPreferences("BmiCalculator", MODE_PRIVATE)
         val editor = pref.edit()
-
+        var getChangeValueOfScale = pref.getFloat(Constant.weightValueKey, 65f)
+        var getCurrentSelectedWeightUnit = pref.getString(Constant.weightUnitKey, "libs")
         binding.apply {
+            scaleView.setStartingPoint(getChangeValueOfScale)
+            scaleView.setUpdateListener { result ->
+                changeHeightValue(result.toFloat())
+                getChangeValueOfScale = result.toFloat()
+                Log.i(TAG, "onCreate: $result")
+                editor.putFloat("weightValue", result)
+                editor.apply()
+            }
+            weightValueView.setText(String.format("%.2f", getChangeValueOfScale))
+            if (getCurrentSelectedWeightUnit === "kg"){
+                changeSelectedBg("kg")
+                val getWeightValueInKg = getWeightInKg(getChangeValueOfScale)
+                weightValueView.setText(String.format("%.2f", getWeightValueInKg))
+            }else{
+                changeSelectedBg("libs")
+            }
             backIc.setOnClickListener {
                 finish()
             }
@@ -35,6 +55,11 @@ class WeightActivity : AppCompatActivity() {
                 changeHeightUnit("kg")
                 changeSelectedBg("kg")
                 editor.putString("weightUnit", "kg")
+                val getWeightValue = getWeightInKg(getChangeValueOfScale)
+                    editor.putFloat(Constant.weightValueKey, getWeightValue)
+                    editor.putString(Constant.weightUnitKey, "kg")
+                    editor.apply()
+                weightValueView.setText(String.format("%.2f", getWeightValue))
 
 //                Toast.makeText(this@WeightActivity, "kg clicked", Toast.LENGTH_SHORT).show()
             }
@@ -42,21 +67,22 @@ class WeightActivity : AppCompatActivity() {
                 changeSelectedBg("libs")
                 changeHeightUnit("libs")
                 editor.putString("weightUnit", "libs")
+                val getWeightValue = getWeightInLbs(getChangeValueOfScale)
+                weightValueView.setText(String.format("%.2f", getWeightValue))
+                editor.putFloat(Constant.weightValueKey, getWeightValue)
+                editor.putString(Constant.weightUnitKey, "libs")
                 editor.apply()
-//                Toast.makeText(this@MainActivity, "libs clicked", Toast.LENGTH_SHORT).show()
+//              Toast.makeText(this@MainActivity, "libs clicked", Toast.LENGTH_SHORT).show()
 
             }
-            scaleView.setStartingPoint(65f)
-            scaleView.setUpdateListener { result ->
-                changeHeightValue(result.toFloat())
-                Log.i(TAG, "onCreate: $result")
-                editor.putFloat("weightValue", result)
-                editor.apply()
-            }
-
 
             nextBtn.setOnClickListener {
-                startActivity(Intent(this@WeightActivity, HeightAct::class.java))
+                val getSettingCompleted = pref.getBoolean(Constant.isCompletedSettingKey, false)
+                if (getSettingCompleted){
+                    startActivity(Intent(this@WeightActivity, DashboardAct::class.java))
+                }else{
+                    startActivity(Intent(this@WeightActivity, HeightAct::class.java))
+                }
 //                finish()
             }
         }
@@ -68,7 +94,7 @@ class WeightActivity : AppCompatActivity() {
 
     private fun changeHeightValue(value : Float){
 //        float value 2 decimal places
-        binding.heightValue.text =String.format(Locale.getDefault(), "%.2f", value)
+        binding.weightValueView.text =String.format(Locale.getDefault(), "%.2f", value)
 
     }
     private fun changeSelectedBg(getUnit: String){
