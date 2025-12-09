@@ -27,55 +27,63 @@ class WeightActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val pref = getSharedPreferences("BmiCalculator", MODE_PRIVATE)
+        val pref = getSharedPreferences(Constant.sharedPrefKey, MODE_PRIVATE)
         val editor = pref.edit()
-        var getChangeValueOfScale = pref.getFloat(Constant.weightValueKey, 65f)
-        var getCurrentSelectedWeightUnit = pref.getString(Constant.weightUnitKey, "libs")
+        var currentValue = pref.getFloat(Constant.weightValueKey, 165f)
+        var currentUnit = pref.getString(Constant.weightUnitKey, Constant.unitLbsKey)
+        editor.putFloat(Constant.weightValueKey, currentValue)
+        editor.putString(Constant.weightUnitKey, currentUnit)
+
         binding.apply {
-            scaleView.setStartingPoint(getChangeValueOfScale)
+            scaleView.setStartingPoint(currentValue)
             scaleView.setUpdateListener { result ->
                 changeHeightValue(result.toFloat())
-                getChangeValueOfScale = result.toFloat()
+                currentValue = result.toFloat()
                 Log.i(TAG, "onCreate: $result")
                 editor.putFloat("weightValue", result)
                 editor.apply()
             }
-            weightValueView.setText(String.format("%.2f", getChangeValueOfScale))
-            if (getCurrentSelectedWeightUnit === "kg"){
+            weightValueView.setText(String.format("%.2f", currentValue))
+            if (currentUnit === "kg"){
                 changeSelectedBg("kg")
-                val getWeightValueInKg = getWeightInKg(getChangeValueOfScale)
+                val getWeightValueInKg = getWeightInKg(currentValue)
                 weightValueView.setText(String.format("%.2f", getWeightValueInKg))
             }else{
-                changeSelectedBg("libs")
-            }
-            backIc.setOnClickListener {
-                finish()
+                changeSelectedBg("lbs")
             }
             kgTextView.setOnClickListener {
-                changeHeightUnit("kg")
-                changeSelectedBg("kg")
-                editor.putString("weightUnit", "kg")
-                val getWeightValue = getWeightInKg(getChangeValueOfScale)
-                    editor.putFloat(Constant.weightValueKey, getWeightValue)
-                    editor.putString(Constant.weightUnitKey, "kg")
+                if (currentUnit == "lbs") {
+                    changeHeightUnit("kg")
+                    changeSelectedBg("kg")
+                    editor.putString("weightUnit", "kg")
+                    val getWeightValue = getWeightInKg(currentValue)
+                    currentUnit = "kg"
+                    currentValue = getWeightValue
+                    editor.putFloat(Constant.weightValueKey, currentValue)
+                    editor.putString(Constant.weightUnitKey, currentUnit)
                     editor.apply()
-                weightValueView.setText(String.format("%.2f", getWeightValue))
+                    weightValueView.setText(String.format("%.2f", currentValue))
+                }else{
 
-//                Toast.makeText(this@WeightActivity, "kg clicked", Toast.LENGTH_SHORT).show()
+                }
             }
             libsTxtView.setOnClickListener {
-                changeSelectedBg("libs")
-                changeHeightUnit("libs")
-                editor.putString("weightUnit", "libs")
-                val getWeightValue = getWeightInLbs(getChangeValueOfScale)
-                weightValueView.setText(String.format("%.2f", getWeightValue))
-                editor.putFloat(Constant.weightValueKey, getWeightValue)
-                editor.putString(Constant.weightUnitKey, "libs")
-                editor.apply()
-//              Toast.makeText(this@MainActivity, "libs clicked", Toast.LENGTH_SHORT).show()
 
+                if (currentUnit == "kg"){
+                    changeSelectedBg("lbs")
+                    changeHeightUnit("lbs")
+                    editor.putString("weightUnit", "lbs")
+                    val getWeightValue = getWeightInLbs(currentValue)
+                    currentValue = getWeightValue
+                    currentUnit = "lbs"
+                    editor.putFloat(Constant.weightValueKey, currentValue)
+                    weightValueView.setText(String.format("%.2f", currentValue))
+                    editor.putString(Constant.weightUnitKey, currentUnit)
+                    editor.apply()
+                }else{
+
+                }
             }
-
             nextBtn.setOnClickListener {
                 val getSettingCompleted = pref.getBoolean(Constant.isCompletedSettingKey, false)
                 if (getSettingCompleted){
@@ -85,20 +93,19 @@ class WeightActivity : AppCompatActivity() {
                 }
 //                finish()
             }
+            backIc.setOnClickListener {
+                finish()
+            }
         }
     }
     private fun changeHeightUnit(unit: String){
         binding.weightUnit.text = unit
-
     }
-
     private fun changeHeightValue(value : Float){
 //        float value 2 decimal places
         binding.weightValueView.text =String.format(Locale.getDefault(), "%.2f", value)
-
     }
     private fun changeSelectedBg(getUnit: String){
-
         if (getUnit === "kg"){
             binding.kgTextView.setBackgroundResource(R.drawable.bg_common)
             binding.kgTextView.setTextColor(resources.getColor(R.color.white))

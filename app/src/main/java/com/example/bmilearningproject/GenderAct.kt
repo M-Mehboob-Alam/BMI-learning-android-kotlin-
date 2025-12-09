@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bmilearningproject.databinding.ActivityGenderBinding
+import com.example.bmilearningproject.util.Constant
 
 class GenderAct : AppCompatActivity() {
     private var TAG = "GenderAct"
@@ -24,16 +25,18 @@ class GenderAct : AppCompatActivity() {
         }
         val pref = getSharedPreferences("BmiCalculator", MODE_PRIVATE)
         val editor = pref.edit()
+        editor.putString(Constant.genderKey, "male")
+        editor.apply()
 
         binding.apply {
             genderMale.setOnClickListener {
                 changeGenderCardColor("male")
-                editor.putString("gender", "male")
+                editor.putString(Constant.genderKey, "male")
                 editor.apply()
             }
             genderFemale.setOnClickListener {
                 changeGenderCardColor("female")
-                editor.putString("gender", "female")
+                editor.putString(Constant.genderKey, "female")
                 editor.apply()
             }
             nextBtn.setOnClickListener {

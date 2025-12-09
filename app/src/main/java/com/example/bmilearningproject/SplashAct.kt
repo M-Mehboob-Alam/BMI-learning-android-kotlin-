@@ -27,9 +27,6 @@ class SplashAct : AppCompatActivity() {
             insets
         }
         val pref = getSharedPreferences("BmiCalculator", MODE_PRIVATE)
-        val unit = pref.getString("unit", "cm")
-        val heightValue = pref.getFloat("heightValue", 5.0f)
-        Log.i(TAG, "onCreate: $unit $heightValue ")
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 binding.title.text = "WELCOME TO BMI"
@@ -49,10 +46,5 @@ class SplashAct : AppCompatActivity() {
                 finish()
             }, 3000
         )
-//        binding.apply {
-//            val intent = Intent(this@SplashAct, MainActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
     }
 }

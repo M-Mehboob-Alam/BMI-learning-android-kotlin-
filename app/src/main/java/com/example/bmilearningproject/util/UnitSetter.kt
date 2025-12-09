@@ -52,15 +52,21 @@ fun Activity.getCurrentWeightUnit() : Pair<String, Float>{
     val currentWeightUnit = pref.getString(Constant.weightUnitKey, "kg") ?: "kg"
     return currentWeightUnit to currentWeightValue
 }
+private const val POUNDS_PER_KG = 2.20462f
+private const val CM_PER_FOOT = 30.48f
+
 fun Activity.getWeightInKg(lbs: Float): Float {
-    return lbs / 2.20462f
+    return lbs / POUNDS_PER_KG
 }
-fun getWeightInLbs(kg: Float): Float {
-    return kg * 2.20462f
+
+fun Activity.getWeightInLbs(kg: Float): Float {
+    return kg * POUNDS_PER_KG
 }
-fun getHeightInFt(cm: Float): Float {
-    return cm / 30.48f
+
+fun Activity.getHeightInFt(cm: Float): Float {
+    return cm / CM_PER_FOOT
 }
-fun getHeightInCm(ft: Float): Float {
-    return ft * 30.48f
+
+fun Activity.getHeightInCm(ft: Float): Float {
+    return ft * CM_PER_FOOT
 }

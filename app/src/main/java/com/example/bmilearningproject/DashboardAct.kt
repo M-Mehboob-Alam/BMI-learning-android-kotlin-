@@ -42,12 +42,11 @@ class DashboardAct : AppCompatActivity() {
         val ageUnit = pref.getString("ageUnit", "y")
         val ageValue = pref.getFloat("ageValue", 0f)
         val isCompletedSetting = pref.getBoolean(Constant.isCompletedSettingKey, false)
-        if(!isCompletedSetting){
+        if (!isCompletedSetting) {
             editor.putBoolean(Constant.isCompletedSettingKey, true)
             editor.apply()
         }
-
-        Log.i(TAG, "Gender: $gender  Height: $heightUnitCode $heightValueCode Weight: $weightUnitValue $weightValue Age: $ageUnit $ageValue isCompletedSetting: $isCompletedSetting")
+//        Log.i(TAG, "Gender: $gender  Height: $heightUnitCode $heightValueCode Weight: $weightUnitValue $weightValue Age: $ageUnit $ageValue isCompletedSetting: $isCompletedSetting")
         binding.apply {
             nextBtn.setOnClickListener {
                 val intent = Intent(this@DashboardAct, ResultAct::class.java)
@@ -58,14 +57,14 @@ class DashboardAct : AppCompatActivity() {
                 startActivity(Intent(this@DashboardAct, SettingAct::class.java))
                 finish()
             }
-            if (gender =="female"){
+            if (gender == "female") {
 //                Log.i(TAG, "onCreate: gender is female selected")
 //                Toast.makeText(this@DashboardAct, "selected gender is female", Toast.LENGTH_SHORT).show()
                 genderFemale.setCardBackgroundColor(getColor(R.color.common_color))
                 genderMale.setCardBackgroundColor(getColor(R.color.card_color))
                 female.setTextColor(getColor(R.color.white))
                 male.setTextColor(getColor(R.color.common_color_light))
-            }else{
+            } else {
                 genderMale.setCardBackgroundColor(getColor(R.color.common_color))
                 genderFemale.setCardBackgroundColor(getColor(R.color.card_color))
                 male.setTextColor(getColor(R.color.white))
@@ -73,27 +72,25 @@ class DashboardAct : AppCompatActivity() {
 
             }
             ageValueView.setText(String.format("%.2f", ageValue))
-
             weightValueView.setText(String.format("%.2f", weightValue))
             weightValueView.showSoftInputOnFocus = false
             weightValueView.isFocusable = false
             weightValueView.isCursorVisible = false
             weightValueView.setOnClickListener {
-                showEditConfirmDialog()
+                showWeightDialog()
             }
             heightValueView.setText(String.format("%.2f", heightValueCode))
             getWeightUnit(this@DashboardAct, weightUnitValue, libsTextView, kgTextView)
             kgTextView.setOnClickListener {
                 getWeightUnit(this@DashboardAct, "kg", libsTextView, kgTextView)
                 val convertedWeightKg = getWeightInKg(weightValue)
-                weightValueView.setText(String.format("%.2f",convertedWeightKg))
+                weightValueView.setText(String.format("%.2f", convertedWeightKg))
                 weightUnit.hint = "Weight (kg)"
                 Log.i(TAG, "converted weight: $convertedWeightKg")
-
             }
             libsTextView.setOnClickListener {
                 getWeightUnit(this@DashboardAct, "libs", libsTextView, kgTextView)
-               val convertedWeight = getWeightInLbs(weightValue)
+                val convertedWeight = getWeightInLbs(weightValue)
                 weightValueView.setText(String.format("%.2f", convertedWeight))
                 weightUnit.hint = "Weight (lbs)"
                 Log.i(TAG, "converted weight: $convertedWeight")
@@ -112,51 +109,50 @@ class DashboardAct : AppCompatActivity() {
                 heightUnit.hint = "Height (cm)"
             }
             bmr.setOnClickListener {
-                getCurrentActiveIndicator(this@DashboardAct, "bmr", bmiCard, bmrCard, blogCard, bmi, bmr, blog)
+                getCurrentActiveIndicator(
+                    this@DashboardAct,
+                    "bmr",
+                    bmiCard,
+                    bmrCard,
+                    blogCard,
+                    bmi,
+                    bmr,
+                    blog
+                )
 
                 startActivity(Intent(this@DashboardAct, BmrAct::class.java))
             }
             bmi.setOnClickListener {
-                getCurrentActiveIndicator(this@DashboardAct, "bmi", bmiCard, bmrCard, blogCard, bmi, bmr, blog)
+                getCurrentActiveIndicator(
+                    this@DashboardAct,
+                    "bmi",
+                    bmiCard,
+                    bmrCard,
+                    blogCard,
+                    bmi,
+                    bmr,
+                    blog
+                )
                 startActivity(Intent(this@DashboardAct, BlogAct::class.java))
             }
 
-
-
-//            if (heightUnit == "ft"){
-//                cmTextView.setTextColor(getColor(R.color.common_color_light))
-//                cmTextView.setBackgroundResource(R.drawable.bg_white)
-//                ftTextView.setTextColor(getColor(R.color.white))
-//                ftTextView.setBackgroundResource(R.drawable.bg_common)
-//            }else{
-//                cmTextView.setTextColor(getColor(R.color.white))
-//                cmTextView.setBackgroundResource(R.drawable.bg_common)
-//                ftTextView.setTextColor(getColor(R.color.common_color_light))
-//                ftTextView.setBackgroundResource(R.drawable.bg_white)
-//            }
-//            if (weightUnit == "libs"){
-//                libsTextView.setTextColor(getColor(R.color.white))
-//                libsTextView.setBackgroundResource(R.drawable.bg_common)
-//                kgTextView.setTextColor(getColor(R.color.common_color_light))
-//                kgTextView.setBackgroundResource(R.drawable.bg_white)
-//            }else{
-//                kgTextView.setTextColor(getColor(R.color.white))
-//                kgTextView.setBackgroundResource(R.drawable.bg_common)
-//                libsTextView.setTextColor(getColor(R.color.common_color_light))
-//                libsTextView.setBackgroundResource(R.drawable.bg_white)
-//            }
-
-
-
             blog.setOnClickListener {
-                getCurrentActiveIndicator(this@DashboardAct, "blog", bmiCard, bmrCard, blogCard, bmi, bmr, blog)
-
+                getCurrentActiveIndicator(
+                    this@DashboardAct,
+                    "blog",
+                    bmiCard,
+                    bmrCard,
+                    blogCard,
+                    bmi,
+                    bmr,
+                    blog
+                )
                 startActivity(Intent(this@DashboardAct, BlogAct::class.java))
-
             }
 
         }
     }
+
     override fun onStart() {
         super.onStart()
 
@@ -171,7 +167,8 @@ class DashboardAct : AppCompatActivity() {
             binding.blog
         )
     }
-    private fun showEditConfirmDialog() {
+
+    private fun showWeightDialog() {
         AlertDialog.Builder(this)
             .setTitle("Edit")
             .setMessage("Are you sure you want to edit this field")

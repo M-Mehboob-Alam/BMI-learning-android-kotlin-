@@ -10,7 +10,7 @@ object Constant {
     val ageUnitKey = "ageUnit"
     val ageValueKey = "ageValue"
     val unitKgKey = "kg"
-    val unitLibsKey = "libs"
+    val unitLbsKey = "lbs"
     val unitCmKey = "cm"
     val unitFtKey = "ft"
     val isCompletedSettingKey = "isCompletedSetting"

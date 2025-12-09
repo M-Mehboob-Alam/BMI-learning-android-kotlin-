@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bmilearningproject.databinding.ActivityMainBinding
+import com.example.bmilearningproject.util.Constant
 import java.util.Locale
 
 class HeightAct : AppCompatActivity() {
@@ -33,32 +34,35 @@ class HeightAct : AppCompatActivity() {
         val pref = getSharedPreferences("BmiCalculator", MODE_PRIVATE)
         //        create editor
         val editor = pref.edit()
+        val currentValue = pref.getFloat(Constant.heightValueKey, 5.7f)
+        val currentUnit = pref.getString(Constant.heightUnitKey, "ft")
+        editor.putFloat(Constant.heightValueKey, currentValue)
+        editor.putString(Constant.heightUnitKey, currentUnit)
+        editor.apply()
 
         binding.apply {
+            scaleView.setStartingPoint(currentValue)
+            scaleView.setUpdateListener { result ->
+                changeHeightValue(result.toFloat())
+                Log.i(TAG, "onCreate: $result")
+                editor.putFloat(Constant.heightValueKey, result)
+                editor.apply()
+            }
             cmTxtView.setOnClickListener {
                 changeHeightUnit("cm")
                 changeSelectedBg("cm")
-                editor.putString("heightUnit", "cm")
+                editor.putString(Constant.heightUnitKey, "cm")
                 editor.apply()
 //                Toast.makeText(this@HeightAct, "cm clicked", Toast.LENGTH_SHORT).show()
             }
             ftTxtView.setOnClickListener {
                 changeSelectedBg("ft")
                 changeHeightUnit("ft")
-                editor.putString("heightUnit", "ft")
+                editor.putString(Constant.heightUnitKey, "ft")
                 editor.apply()
 //                Toast.makeText(this@MainActivity, "ft clicked", Toast.LENGTH_SHORT).show()
 
             }
-            scaleView.setStartingPoint(165f)
-            scaleView.setUpdateListener { result ->
-                changeHeightValue(result.toFloat())
-                Log.i(TAG, "onCreate: $result")
-                editor.putFloat("heightValue", result)
-                editor.apply()
-            }
-
-
 
             nextBtn.setOnClickListener {
                 startActivity(Intent(this@HeightAct, DashboardAct::class.java))

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bmilearningproject.databinding.ActivityAgeBinding
+import com.example.bmilearningproject.util.Constant
 import java.util.Locale
 
 class AgeAct : AppCompatActivity() {
@@ -26,19 +27,18 @@ class AgeAct : AppCompatActivity() {
         }
         val pref = getSharedPreferences("BmiCalculator", MODE_PRIVATE)
         val editor = pref.edit()
+        editor.putFloat(Constant.genderKey, 25F)
 
         binding.apply {
             backIc.setOnClickListener {
                 finish()
             }
-
-
-            scaleView.setStartingPoint(90f)
+            scaleView.setStartingPoint(25f)
             scaleView.setUpdateListener { result ->
-                changeHeightValue(result.toInt())
+                changeAgeValue(result.toInt())
                 Log.i(TAG, "onCreate: $result")
-                editor.putString("ageUnit", "y")
-                editor.putFloat("ageValue", result)
+                editor.putString(Constant.ageUnitKey, "y")
+                editor.putFloat(Constant.ageValueKey, result)
                 editor.apply()
             }
 
@@ -53,8 +53,7 @@ class AgeAct : AppCompatActivity() {
         binding.weightUnit.text = unit
 
     }
-
-    private fun changeHeightValue(value : Int){
+    private fun changeAgeValue(value : Int){
 //        float value 2 decimal places
 //        Toast.makeText(this@AgeAct, "get age value from scale " + value, Toast.LENGTH_SHORT).show()
         binding.ageValue.text =value.toString()
