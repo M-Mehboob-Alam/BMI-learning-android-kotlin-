@@ -27,7 +27,7 @@ class AgeAct : AppCompatActivity() {
         }
         val pref = getSharedPreferences("BmiCalculator", MODE_PRIVATE)
         val editor = pref.edit()
-        editor.putFloat(Constant.genderKey, 25F)
+        editor.putFloat(Constant.ageValueKey, 25F)
 
         binding.apply {
             backIc.setOnClickListener {

@@ -34,13 +34,15 @@ class DashboardAct : AppCompatActivity() {
         }
         val pref = getSharedPreferences(Constant.sharedPrefKey, MODE_PRIVATE)
         val editor = pref.edit()
-        val gender = pref.getString(Constant.genderKey, "male")
-        val heightUnitCode = pref.getString("heightUnit", "cm")
-        val heightValueCode = pref.getFloat("heightValue", 0f)
-        val weightUnitValue = pref.getString("weightUnit", "kg")
-        val weightValue = pref.getFloat("weightValue", 0f)
-        val ageUnit = pref.getString("ageUnit", "y")
-        val ageValue = pref.getFloat("ageValue", 0f)
+        val allPrefs = pref.all
+        Log.d("PREFS_DUMP", allPrefs.toString())
+        var gender = pref.getString(Constant.genderKey, "male")
+        var heightUnitCode = pref.getString(Constant.heightUnitKey, "ft")
+        var heightValueCode = pref.getFloat(Constant.heightValueKey, 5.7f)
+        var weightUnitValue = pref.getString(Constant.weightUnitKey, "lbs")
+        var weightValue = pref.getFloat(Constant.weightValueKey, 165f)
+        var ageUnit = pref.getString(Constant.ageUnitKey, "y")
+        var ageValue = pref.getFloat(Constant.ageValueKey, 25f)
         val isCompletedSetting = pref.getBoolean(Constant.isCompletedSettingKey, false)
         if (!isCompletedSetting) {
             editor.putBoolean(Constant.isCompletedSettingKey, true)
@@ -80,33 +82,64 @@ class DashboardAct : AppCompatActivity() {
                 showWeightDialog()
             }
             heightValueView.setText(String.format("%.2f", heightValueCode))
+            heightValueView.showSoftInputOnFocus = false
+            heightValueView.isFocusable = false
+            heightValueView.isCursorVisible = false
+            heightValueView.setOnClickListener {
+                showHeightDialog()
+            }
             getWeightUnit(this@DashboardAct, weightUnitValue, libsTextView, kgTextView)
             kgTextView.setOnClickListener {
                 getWeightUnit(this@DashboardAct, "kg", libsTextView, kgTextView)
-                val convertedWeightKg = getWeightInKg(weightValue)
-                weightValueView.setText(String.format("%.2f", convertedWeightKg))
-                weightUnit.hint = "Weight (kg)"
-                Log.i(TAG, "converted weight: $convertedWeightKg")
+                if (weightUnitValue == "lbs") {
+                    weightValue = getWeightInKg(weightValue)
+                    weightUnitValue = "kg"
+                    weightValueView.setText(String.format("%.2f", weightValue))
+                    weightUnit.hint = "Weight (kg)"
+                    editor.putFloat(Constant.weightValueKey, weightValue)
+                    editor.putString(Constant.weightUnitKey, "kg")
+                    editor.apply()
+                    Log.i(TAG, "converted weight: $weightValue")
+                }
             }
             libsTextView.setOnClickListener {
                 getWeightUnit(this@DashboardAct, "libs", libsTextView, kgTextView)
-                val convertedWeight = getWeightInLbs(weightValue)
-                weightValueView.setText(String.format("%.2f", convertedWeight))
-                weightUnit.hint = "Weight (lbs)"
-                Log.i(TAG, "converted weight: $convertedWeight")
+                if (weightUnitValue == "kg"){
+                    weightValue = getWeightInLbs(weightValue)
+                    weightValueView.setText(String.format("%.2f", weightValue))
+                    weightUnitValue = "lbs"
+                    weightUnit.hint = "Weight (lbs)"
+                    editor.putFloat(Constant.weightValueKey, weightValue)
+                    editor.putString(Constant.weightUnitKey, "lbs")
+                    editor.apply()
+                    Log.i(TAG, "converted weight: $weightValue")
+                }
             }
             getHeightUnit(this@DashboardAct, heightUnitCode, ftTextView, cmTextView)
             ftTextView.setOnClickListener {
                 getHeightUnit(this@DashboardAct, "ft", ftTextView, cmTextView)
-                val convertedHeightFt = getHeightInFt(heightValueCode)
-                heightValueView.setText(String.format("%.2f", convertedHeightFt))
-                heightUnit.hint = "Height (ft)"
+                if (heightUnitCode  == "cm"){
+                    heightValueCode = getHeightInFt(heightValueCode)
+                    heightValueView.setText(String.format("%.2f", heightValueCode))
+                    heightUnit.hint = "Height (ft)"
+                    heightUnitCode = "ft"
+                    editor.putFloat(Constant.heightValueKey, heightValueCode)
+                    editor.putString(Constant.heightUnitKey, heightUnitCode)
+                    editor.apply()
+                }
             }
             cmTextView.setOnClickListener {
                 getHeightUnit(this@DashboardAct, "cm", ftTextView, cmTextView)
-                val convertedHeightCm = getHeightInCm(heightValueCode)
-                heightValueView.setText(String.format("%.2f", convertedHeightCm))
-                heightUnit.hint = "Height (cm)"
+                if (heightUnitCode == "ft"){
+
+                    heightValueCode = getHeightInCm(heightValueCode)
+                    heightValueView.setText(String.format("%.2f", heightValueCode))
+                    heightUnit.hint = "Height (cm)"
+                    heightUnitCode = "cm"
+                    editor.putFloat(Constant.heightValueKey, heightValueCode)
+                    editor.putString(Constant.heightUnitKey, heightUnitCode)
+                    editor.apply()
+                }
             }
             bmr.setOnClickListener {
                 getCurrentActiveIndicator(
@@ -171,10 +204,27 @@ class DashboardAct : AppCompatActivity() {
     private fun showWeightDialog() {
         AlertDialog.Builder(this)
             .setTitle("Edit")
-            .setMessage("Are you sure you want to edit this field")
+            .setMessage("Are you sure you want to edit Weight")
             .setPositiveButton("Yes") { dialog, _ ->
                 dialog.dismiss()
                 Intent(this, WeightActivity::class.java).also {
+                    startActivity(it)
+                }
+                finish()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+
+    }
+    private fun showHeightDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Edit")
+            .setMessage("Are you sure you want to edit Height")
+            .setPositiveButton("Yes") { dialog, _ ->
+                dialog.dismiss()
+                Intent(this, HeightAct::class.java).also {
                     startActivity(it)
                 }
                 finish()

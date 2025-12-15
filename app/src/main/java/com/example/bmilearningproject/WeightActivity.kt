@@ -30,7 +30,7 @@ class WeightActivity : AppCompatActivity() {
         val pref = getSharedPreferences(Constant.sharedPrefKey, MODE_PRIVATE)
         val editor = pref.edit()
         var currentValue = pref.getFloat(Constant.weightValueKey, 165f)
-        var currentUnit = pref.getString(Constant.weightUnitKey, Constant.unitLbsKey)
+        var currentUnit = pref.getString(Constant.weightUnitKey, "lbs")
         editor.putFloat(Constant.weightValueKey, currentValue)
         editor.putString(Constant.weightUnitKey, currentUnit)
 
@@ -40,11 +40,12 @@ class WeightActivity : AppCompatActivity() {
                 changeHeightValue(result.toFloat())
                 currentValue = result.toFloat()
                 Log.i(TAG, "onCreate: $result")
-                editor.putFloat("weightValue", result)
+                editor.putFloat(Constant.weightValueKey, result)
+                editor.putString(Constant.weightUnitKey, currentUnit)
                 editor.apply()
             }
             weightValueView.setText(String.format("%.2f", currentValue))
-            if (currentUnit === "kg"){
+            if (currentUnit == "kg"){
                 changeSelectedBg("kg")
                 val getWeightValueInKg = getWeightInKg(currentValue)
                 weightValueView.setText(String.format("%.2f", getWeightValueInKg))
@@ -55,7 +56,6 @@ class WeightActivity : AppCompatActivity() {
                 if (currentUnit == "lbs") {
                     changeHeightUnit("kg")
                     changeSelectedBg("kg")
-                    editor.putString("weightUnit", "kg")
                     val getWeightValue = getWeightInKg(currentValue)
                     currentUnit = "kg"
                     currentValue = getWeightValue
@@ -72,7 +72,6 @@ class WeightActivity : AppCompatActivity() {
                 if (currentUnit == "kg"){
                     changeSelectedBg("lbs")
                     changeHeightUnit("lbs")
-                    editor.putString("weightUnit", "lbs")
                     val getWeightValue = getWeightInLbs(currentValue)
                     currentValue = getWeightValue
                     currentUnit = "lbs"
@@ -106,7 +105,7 @@ class WeightActivity : AppCompatActivity() {
         binding.weightValueView.text =String.format(Locale.getDefault(), "%.2f", value)
     }
     private fun changeSelectedBg(getUnit: String){
-        if (getUnit === "kg"){
+        if (getUnit == "kg"){
             binding.kgTextView.setBackgroundResource(R.drawable.bg_common)
             binding.kgTextView.setTextColor(resources.getColor(R.color.white))
             binding.libsTxtView.setBackgroundResource(R.drawable.bg_white)

@@ -55,6 +55,10 @@ fun Activity.getCurrentWeightUnit() : Pair<String, Float>{
 private const val POUNDS_PER_KG = 2.20462f
 private const val CM_PER_FOOT = 30.48f
 
+private const val CM_PER_INCH = 2.54f
+
+private  const val  INCH_PER_FOOT = 12f
+
 fun Activity.getWeightInKg(lbs: Float): Float {
     return lbs / POUNDS_PER_KG
 }
